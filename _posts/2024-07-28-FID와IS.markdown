@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "FID와 IS"
-date:   2024-07-28 17:28
+date:   2024-07-28 20:48
 categories: mystudy
 ---
 # 주제
