@@ -76,12 +76,14 @@ Left|Center|Right
 
 cd 경로
 
-git add .
-git commit -m "Uploaded first post"
-git push origin master
+```
+git add .   
+git commit -m "Uploaded first post"   
+git push origin master   
+```
 
-
-참고: 
+---
+참고:    
 https://github.com/jinkyukim-me/markdown_ko?tab=readme-ov-file#1-headers-%ED%97%A4%EB%8D%94   
 
 https://gist.github.com/ihoneymon/652be052a0727ad59601
