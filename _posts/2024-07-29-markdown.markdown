@@ -37,9 +37,18 @@ tag: markdown
 `인라인 코드`입니다.
 
 태그는 위에 tag: 추가하기
+
+> 팁이다!
+{: .prompt-tip }
+
+{: .prompt-info }
+{: .prompt-warning }
+{: .prompt-danger }
+
+
 ```
 
-> 팁이 되나?
+> 팁이다!
 {: .prompt-tip }
 
 
