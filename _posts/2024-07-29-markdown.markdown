@@ -3,9 +3,10 @@ layout: post
 title:  "post"
 date:   2024-07-20 08:11
 categories: mystudy
+tag: markdown
 ---
 
-```
+```markdown
 기울여 쓰기: *로 감싸기
 두껍게 쓰기: **로 감싸기
 취소선: ~~으로 감싸기
@@ -31,7 +32,27 @@ categories: mystudy
 
 <br>, 3칸 이상 띄어쓰기(   ): 줄바꿈
 
+<span style="color:yellow">노란 글씨입니다.</span>
+
+이런게 바로 `인라인 코드`입니다.
+
 ```
+
+이런게 바로 `인라인 코드`입니다.
+
+[!tip] 이게 팁인가
+
+
+
+
+
+
+
+
+
+
+
+
 
 ```
 
@@ -83,10 +104,6 @@ git push origin master
 ```
 
 
-
-[블록]
-
-#태크
 
 
 
