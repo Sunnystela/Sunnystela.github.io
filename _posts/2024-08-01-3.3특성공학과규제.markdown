@@ -8,3 +8,333 @@ tag: 혼공머신
 > 여러 특성을 사용한 다중 회귀에 대해 배우고 사이킷런의 여러 도구를 사용해보자. 복잡한 모델의 과대적합을 막기 위한 릿지와 라쏘 회귀를 공부해보자
 
 ## 다중회귀
+
+여러 개의 특성을 사용한 선형 회귀를 `다중회귀(multiple regression)`라고 부른다.
+
+1개의 특성을 사용했을 때 선형 회귀 모델이 학습하는 것은 직선이다. 2개의 특성을 사용하면? 평면을 학습한다. 
+
+![alt](/assets/img/3.3다중회귀.png)
+
+특성이 3개면??
+
+아쉽게도 3차원 공간 이상을 그릴 수 없다. 
+
+이번에는 농어의 길이, 높이, 두께 함께 사용해보자. 이전과 같이 3개의 특성을 각각 제곱하여 추가하자. 거기에 각 특성을 서로 곱해서 또 다른 새로운 특성을 만들자(농어 길이 x 농어 높이)
+
+이렇게 기존 특성을 사용해 새로운 특성을 뽑아내는 것을 `특성공학`이라고 한다. 
+
+## 데이터 준비
+
+특성이 3개다.. 복사 붙여넣는 것도 귀찮다. 바로 다운로드 하는 방법은 없을까? 있다! 넘파이가 아닌 판다스를 사용하면 된다.
+
+`판다스`는 데이터 분석 라이브러리다. `데이터프레임`은 판다스의 핵심 데이터 구조이다. 넘파이 배열과 비슷하게 다차원 배열을 다루면서 더 많은 기능을 제공한다. 
+
+판다스 데이터 프레임을 만들기 위해 csv파일을 가장 많이 사용한다. csv파일은 콤마로 나누어져 있는 텍스트 파일이다. 
+
+csv 파일을 판다스에서 읽는 방법은 판다스의 read_csv()함수에 주소를 넣어 주는 것이다. read_csv 함수로 데이터 프레임을 만든 다음 to_numpy()메서드를 사용해 넘파이 배열로 바꾼다. 
+
+![alt](/assets/img/3.3판다스.png)
+
+```python
+import pandas as pd #pd는 판다스 별칭
+df=pd.read_csv('https://bit/ly/perch_csv')
+perch_full=df.to_numpy()
+print(perch_full)
+```
+perch_full과 perch_weight를 훈련 세트와 테스트 세트로 나눈다
+
+## 사이킷런의 변환기
+
+사이킷런에서 `변환기(transfer)`는 특성을 만들거나 전처리하는 클래스를 말한다.
+
+PolynomialFeatures 클래스 변환기를 사용해보자
+
+```python
+from sklearn.processing import PolynomialFeatures
+```
+```python
+poly=PolynomialFeatures() #클래스 객체 만들기
+
+#새롭게 만들 특성 조합 찾기
+poly.fit([[2,3]])
+
+#실제로 데이터를 변환
+print(poly.transform([[2,3]]))
+
+#[[1. 2. 3. 4. 6. 9.]]
+```
+
+변환기는 타깃 데이터 없이 입력 데이터를 변환한다. 따라서 모델 클래스와 다르게 fit() 메서드에 입력 데이터만 전달했다. 
+2개의 특성(원소)을 가진 샘플 [2, 3]이 6개의 특성을 가진 샘플[1. 2. 3. 4. 6. 9.]로 바뀌었다.
+
+PolynomialFeatures에서 기본적으로 각 특성을 제곱한 항을 추가하고 특성끼리 곱한 항을 추가한다. 
+
+엇 근데 1은 뭐지? 
+
+무게 = a X 길이 + b X 높이 + 두께 + d X 1
+
+선형 방정식의 절편을 항상 값이 1인 특성과 곱해지는 계수라고 볼 수 있다. 
+
+특성은 (길이, 높이, 두께, 1)이 된다. 
+
+사이킷런의 자동으로 절편을 추가하기에 이렇게  특성을 만들 필요 없다. 
+
+include_bias= False로 다시 특성을 변환하자
+
+```python
+poly = PolynomialFeatures(include_bias = False)
+poly.fit([[2,3]])
+print(poly.transform([[2,3]]))
+
+#[[2. 3. 4. 6. 9. ]]
+```
+
+절편을 위한 항이 제거되고 특성의 제곱과 특성끼리 곱한 항만 추가되었다. 
+
+```python
+poly=PolynomialFeatures(include_bias=False)
+poly.fit(train_input)
+train_poly=poly.transform(train_input)
+print(train_poly.shape)
+
+#(42, 9)
+```
+```python
+poly.get_feature_names()
+
+#['x0', 'x1', 'x2', 'x0^2', 'x0 x1', 'x0 x2', 'x1 x2', 'x2^2']
+
+```
+
+get_feature_names()로 9개의 특성이 각각 어떤 입력의 조합으로 만들어졌는지 알려준다.
+
+```python
+test_poly=poly.transform(test_input)
+```
+변환된 특성을 사용하여 다중 회귀 모델을 훈련하자
+
+## 다중 회귀 모델 훈련하기
+
+다중 회귀 모델을 훈련하는 것은 선형 회귀 모델을 훈련하는 것과 같다. 단지 여러 개의 특성을 사용하여 선형 회귀를 수행하는 것이다. 
+
+```python
+from sklearn.linear_model import LinearRegression
+lr= LinearRegressoin()
+lr.fit(train_poly, train_target)
+print(lr.score(train_poly, train_target))
+
+#0.99031
+```
+특성이 늘어나면 선형 회귀 능력은 매우 강하다
+
+```python
+print(lr.score(test_poly, test_target))
+
+#0.9714
+```
+
+테스트 세트 점수는 높아지지 않았지만 과소적합 문제는 해결되었다.
+
+5제곱까지 특성을 만들어 55개의 특성 개수를 사용해 선형 회귀 모델을 훈련해보도록 하겠다.
+
+그렇게 되면 거의 완벽한 점수가 나온다. 
+
+하지만 테스트 세트의 점수는? 음수이다. 그것도 아주 큰 음수..
+
+특성의 개수를 크게 늘리면 선형 모델은 강력해진다. 훈련 세트에 대해 완벽하게 학습하는 것이다. 하지만 과대적합 문제도 함께 나타나 테스트 세트에서는 형편없는 점수가 나오게 된다.
+
+>샘플 개수보다 특성이 많다면?<br>
+>훈련 세트의 샘플 개수는 42개이다. 42개의 샘플을 55개의 특성으로 훈련하면 완벽하게 학습할 수 있게 된다. 
+
+과대적합을 줄이는 또 다른 방법을 찾아보자
+
+## 규제
+`규제(regularization)`는 머신 러닝 모델이 훈련 세트를 너무 과도하게 학습하지 못하도록 훼방하는 것을 말한다. 훈련 세트에 과대접합되지 않도록 만드는 것이다. 
+
+선형 회귀 모델의 경우 특성에 곱해지는 계수(또는 기울기)의 크기를 작게 만드는 것이다
+
+왼쪽이 훈련 세트를 과도하게 학습한 모습이다. 오른쪽에 기울기를 줄여 보다 보편적인 패턴을 학습한다. 
+
+![alt](/assets/img/3.3규제.png)
+
+특정 스케일이 정규화되지 않으면 곱해지는 계수 값도 차이나게 된다. 선형 회귀 모델에 규제를 적용할 때 계수 값의 크기가 차이나면 공정하게 제어되지 않을 것이다. 규제를 적용하기 전에 정규화가 필요하다!
+
+특성을 표준 점수로 바꿔도 되고사이킷런에서 제공하는 StandardScaler클래스를 사용해도 된다.
+
+
+
+```python
+
+from sklearn.preprocessing import StandardScaler
+ss=StandardScaler()
+ss.fit(train_poly)
+train_scaled =ss.transform(train_poly)
+test_scaled=ss.transform(test_poly)
+```
+StandardScaler 클래스 객체 ss 초기화
+-> PolynomialFeatures 클래스로 만든 train_poly를 사용해 ss 객체 훈련
+<br>
+!! 훈련 세트로 학습한 변환기를 사용해 테스트 세트까지 변환해야 한다 !!
+
+>훈련 세트에서 학습한 평균과 표준편차는 StandardScaler 클래스 객체의 mean_, scale_속성에 저장된다.
+
+선형 회귀 모델에 규제를 추가한 모델을 **릿지**와 **라쏘**라고 부른다. 
+
+|릿지|라쏘|
+|---|---|
+|계수를 제곱한 값을 기준으로 규제를 적용한다|계수의 절댓값을 기준으로 규제를 적용한다|
+
+릿지를 좀 더 선호한다. 둘 다 계수의 크기를 줄인다. 특히 라쏘는 아예 0으로 만들 수도 있다. 
+
+## 릿지 회귀
+
+```python
+from sklearn.linear_model import Ridge
+ridge=Ridege()
+ridge.fit(train_scaled, train_target)
+print(ridge.score(train_scaled, train_target))
+
+#0.98
+```
+점수가 조금 낮아졌다.
+```python
+print(ridge.score(test_scaled, test_target))
+
+#0.97
+```
+테스트 세트의 점수가 정상이 되었다. 많은 특성을 사용했음에도 불구하고 훈련 세트에 너무 과대적합되지 않아 테스트 세트에서도 좋은 성능을 내고 있다 
+
+릿지와 라쏘 모델을 사용할 때 규제의 양을 조절할 수 있다. 모델 객체를 만들 때 alpha 매개변수로 규제의 강도를 조절한다. 
+
+alpha 값이 크면 규제 강도가 세지므로 계수 값을 줄이고 조금 더 과소적합되도록 유도한다. <br>
+alpha 값이 작으면 계수를 줄이는 역할이 줄어들고 선형 회귀 모델과 유사해지므로 과대적합될 가능성이 크다.
+
+>규제 강도가 세진다 = 규제를 많이 한다 = 훈련 데이터에 딱 맞게 하지 않는다 = 훈련 세트보다는 테스트 세트 점수가 높아지도록 한다{: .prompt-tip }
+
+
+> alpha값은 릿지 모델이 학습하는 값이 아니라 우리가 사전에 지정해야 하는 값이다. 머신러닝 모델이 학습할 수 없고 사람이 알려줘야 하는 파라미터를 `하이퍼파라미터`라고 부른다. <br>
+하이퍼파라미터는 클래스와 메서드의 매개변수이다. 
+<br>
+매개변수는 함수와 클래스의 파라미터이다. <br>파라미터는 모델과 관련된 파라미터(모델 파라미터, 하이퍼파라미터)로 표현된다.
+{: .prompt-tip }
+
+--? 이해 필요
+
+적절한 alpha 값을 찾아보자 alpha 값에 대한 R^2 그래프를 그려보면 된다. 훈련 세트와 테스트 세트의 점수가 가장 가까운 지점이 최적의 alpha 값이 된다. 
+
+```python
+import matplotlib.pyplot as plt
+
+#맷플롯립 임포트하고 alpha 값을 바꿀 때마나 score() 메서드의 결과를 저장할 리스트 만들기
+train_score=[]
+test_score=[]
+```
+```python
+#alpha 값을 0.001에서 100까지 10배씩 늘려가며 릿지 회귀 모델을 훈련한 다음 훈련 세트와 테스트 세트의 점수를 파이썬 라스트에 저장
+
+alpha_list=[0.001, 0.01, 0.1, 1, 10, 100]
+for alpha in alpha_list:
+    #릿지 모델 만들기
+    ridge=Ridge(alpha=alpha)
+    #릿지 모델 훈련
+    ridge=fit(train_scaled, train_target)
+    #훈련 점수와 테스트 점수 저장
+    train_score.append(ridge.score(train_scaled, train_target))
+    test_score.append(ridge.socre(test_scaled, test_target))
+
+```
+
+
+![alt](/assets/img/3.3로그.png)
+
+alpha 값을 0.001부터 10배씩 늘렸기 때문에 이대로 그래프를 그리면 그래프 왼쪽이 너무 촘촘해지기 때문에 alpha_list에 있는 6개의 값을 동일한 간격으로 나타내기 위해 로그 함수로 바꾸어 지수를 표현하자
+
+그래프 왼쪽을 보면 훈련 세트와 테스트 세트의 점수 차이가 아주 크다. <br>
+훈련 세트에는 잘 맞고 테스트 세트에는 맞지 않는 과대적합을 볼 수 있다.<br>
+오른쪽은 훈련 세트와 테스트 세트 점수 모두 낮아지는 과소적합을 볼 수 있다.
+
+적절한 alpha 값은 두 그래프가 가장 가깝고 테스트 세트의 점수가 가장 높은 -1, 즉 10^(-1)=0.1 이다. alpha 값을 0.1로 해서 훈련시켜보자
+
+```python
+ridge=Ridge(alpha=0.1)
+ridge.fir(train_scaled, train_target)
+print(ridge.score(train_scaled, train_target))
+print(ridge.score(test_scaled, test_target))
+
+#0.99
+#0.98
+```
+잘됐다!
+
+## 라쏘 회귀
+Ridge 클래스를 Lasso 클래스로 바꾸면 훈련 끝이다!
+
+```python
+from sklean.linear_model import Lasso
+lasso=Lasso()
+lasso.fit(train_scaled, train_target)
+print(lasso.score(train_scaled, train_target))
+
+#0.989
+```
+```python
+print(lasso.score(test_scaled, test_target))
+
+#0.980
+```
+테스트 세트의 점수도 릿지 많큼 좋다
+alpha 매개변수로 규제 강도를 조절 할 수 있다.
+
+```python
+train_score=[]
+test_score=[]
+alpha_list=[0.001, 0.01, 0.1, 1, 10, 100]
+for alpha in alpha_list:
+    #라쏘 모델 만들기
+    lasso = Lasso(alpha=alpha, max_iter=10000)
+    #라쏘 모델 훈련
+    lasso.fit(train_scaled, train_target)
+    #훈련 점수와 테스트 점수를 저장
+    train_score.append(lasso.score(train_scaled, train_target))
+    test_score.append(lasso.score(test_scaled, test_target))
+
+```
+
+![alt](/assets/img/3.3.라쏘.png)
+
+왼쪽은 과대적합이고 오른쪽으로 갈 수록 훈련 세트와 테스트 세트의 점수가 좁혀지고 있다. 
+
+오른쪽은 점수가 크게 떨어지는 것을 볼 수 있다. 이는 과소적합니다. 
+
+라쏘 모델에서 최적 alpha값은 1로 10^(1)=10이다.
+
+```python
+lasso=Lasso(alpha=10)
+lasso.fit(train_scaled, train_target)
+print(lasso.score(train_scaled, train_target))
+print(lasso.score(test_scaled, test_target))
+
+#0.988
+#0.982
+```
+특성을 많이 사용하긴 했지만 릿지와 마찬가지로 과대적합을 잘 억제하고 테스트 세트의 성능을 높였다. 
+
+라쏘 모델은 계수값을 아예 0으로 만들 수도 있다고 했었다. coef_ 속성에서 라쏘 모델의 계수가 0인 것을 헤아려 보자
+
+```python
+print(np.sum(lasso.coef_ ==0))
+```
+np.sum()함수는 배열을 모두 더한 값을 반환한다. 
+
+많은 계수가 0이 되었다. 55개의 특성을 모델에 주입했지만 라쏘 모델이 사용한 15개이다. 이런 특징으로 라쏘 모델을 유용한 특성을 골라내는 용도로 사용할 수 있다.
+
+---
+## 마무리
+### 키워드
+`다중회귀` `특성공학` `릿지` `라쏘` `하이퍼파라미터`
+
+### 핵심패키지와 함수
+#### pandas
+`read_csv()` 
+#### scikit-learn
+`PolynomialFeatures` `Ridge` `Lasso`
