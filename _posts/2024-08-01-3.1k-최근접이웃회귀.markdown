@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "머신러닝 | 3-1. k-최근접 이웃 회귀"
+title:  "[머신러닝] 3-1. k-최근접 이웃 회귀"
 date:   2024-08-01 13:11
 categories: KHUDA MachineLearning 혼공머신 3.회귀알고리즘과모델규제
 tag: 혼공머신

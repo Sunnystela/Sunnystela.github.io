@@ -1,9 +1,9 @@
 ---
 layout: post
-title:  "post"
+title:  "Markdown"
 date:   2024-07-20 08:11
 categories: mystudy
-tag: markdown
+tag: markdown +
 ---
 
 ```markdown
@@ -52,9 +52,15 @@ tag: markdown
 {: .prompt-tip }
 
 
+>info
+{: .prompt-info }
 
 
+>warning
+{: .prompt-warning }
 
+>danger
+{: .prompt-danger }
 
 
 

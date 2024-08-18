@@ -1,0 +1,157 @@
+---
+layout: post
+title:  "[머신러닝] 5-1. 결정 트리"
+date:   2024-08-17 19:43
+categories: KHUDA MachineLearning 혼공머신 5.트리알고리즘
+tag: 혼공머신
+---
+>결정트리 알고리즘을 사용해 새로운 분류 문제를 다루어보자. <br>
+결정트리가 머신러닝 문제를 어떤헤 해결할까?
+
+## 로지스틱 회귀로 와인 분류하기
+```python
+import pandas as pd
+wine=pd.read_csv('https://bit.ly/wine-date')
+
+wine.head()//제대로 읽었는지 확인하기 위해 처음 5개 샘플 확인
+
+```
+판다스 데이터 프레임에 유용한 메서드 2개를 먼저 알아보자<br>
+info()메서드로 데이터 프레임의 각 열의 데이터 타입과 누락된 데이터가 있는지 확인하는데 유용하다
+
+```python
+wine.info()
+```
+출력결과 None-Null Count가 6497로 누락된 값은 없다
+
+describe()메서드로 열에 대한 간략한 통계를 출력해준다<br>
+최소, 최대, 평균값 등을 볼 수 있다
+
+```python
+wine.describe()
+```
+![alt](/assets/img/5.1와인.png)
+
+알코올 도수와 당도, pH 값의 스케일이 다르다. 판다스 데이터 프레임을 넘파일 배열로 바꾸고 훈련 세트와 테스트 세트로 나누자! 그리고 사이킷런의 StandardScaler 클래스를 사용해 특성을 표준화하자
+
+
+```python
+data=wind[['alcohol','sugar','pH']].to_numpy()
+target=wine['class'].to_numpy()
+```
+처음 3개 열을 넘파이 배열로 바꿔서 data 배열에 저장하고 마지막 class열을 넘파이 배열로 바꿔서 target에 저장했다
+
+```python
+from sklearn.model_selectcion import train_test_split
+train_input, test_input, train_target, test_target=train_test_split(data, target, test_size=0.2, random_state=42)
+```
+train_test_split()함수는 설정값을 지정하지 않으면 25%를 테스트 세트로 지정한다<br>
+여기서는 샘플 개수가 충분히 많아서 test_size=0.2로 20%만 테스트 세트로 나눴다
+
+```python
+print(train_input.shape, test_input.shape)
+#(5197, 3) (1300, 3)
+```
+훈련 세트는 5197개이고 테스트 세트는 1300개이다
+
+우와우 이제 전처리다
+```python
+from sklearn.perprocessing import StandeardScaler
+ss=StandardScaler()
+ss.fit(train_input)
+train_scaled=ss.transform(train_input)
+test_scaled=ss.transform(test_input)
+```
+표준점수로 변환된 train_scaled와 test_scaled를 사용해 로지스틱 회귀 모델을 훈련하자
+```python
+from sklearn.linear_model import LogisticRegression
+lr=LogisticRegression()
+lr.fir(train_scaled, train_target)
+print(lr.score(train_scaled, train_target))
+print(lr.score(test_scaled, test_target))
+#0.7808
+#0.7776
+```
+점수가 별로 맘에 들지 않는다. 훈련 세트 테스트 세트 점수 둘 다 낮은게 과소적합이다. 
+
+해결하기 위해 규제 매개변수 C를 바꿔보자<br>
+뭐 slover매개변수에서 다른 알고리즘을 선택할 수도 있고 다항 특성을 만들어서 추가할 수도 있겠다
+
+## 결정트리
+
+`결정 트리 ` 모델이 이유를 설명하기 쉽다
+
+데이터를 잘 나눌 수 있는 질문을 찾으면 계속 질문을 추가해서 분류 정확도를 높일 수 있다
+
+사이킷런의 DecisionTreeClassifier 클래스를 사용해 결정트리 모델을 훈련해보자
+
+fit()메서드로 훈련하고 score()로 정확도를 평가하면 된다
+
+![alt](/assets/img/5.1결정.png)
+```python
+from sklearn.tree import DecisionTreeClassifier
+dt=DecisionTreeClassifier(random_state=42)
+dt.fit(train_scaled, train_target)#훈련세트
+print(dt.score(train_scaled, train_target))
+print(dt.score(test_scaled, test_target))#테스트 세트
+
+#0.9969
+#0.8592
+```
+
+훈련세트 점수는 높고 테스트 세트 점수는 낮은 과대적합임을 볼 수 있다
+
+plot_tree()함수를 사용해서 트리 그림을 보여준다
+```python
+import matplotlib.pyplot as plt
+from sklearn.tree import plot_tree
+plt.figure(figsize=(10,7))
+plot_tree(dt)
+plt.show()
+```
+![alt](/assets/img/5.1트리.png)
+
+위에서 아래로 자라는 나무로 맨 위의 노드를 루프 노드라고 하고 맨 아래 노드를 리프 노드라고 한다
+
+깊이를 제한해서 그려보자 max_depth 매개변수를 1을 주면 루트 노드를 제외하고 하나의 노드를 더 그려준다
+
+filled 매개변수를 통해 색도 줄 수 있다
+
+featuer_names 매개변수에는 특성 이름을 전달 할 수 있다
+
+```python
+plt.figure(figsize(10,7))
+plot_tree(dt, max_depth=1, filled=True, feature_names=['alcohol','sugar','pH'])
+plt.show()
+```
+
+![alt](/assets/img/5.1노드.png)
+
+![alt](/assets/img/5.1순서.png)
+
+![alt](/assets/img/5.1노드설명.png)
+
+루트 노드의 총 샘플 수는 5197개이다. 이 중에서 음성 클래스(레드 와인)은 1258개, 양성 클래스(화이트 와인)은 3939개이다. value를 통해 알 수 있다
+
+<- 레드와인 <br>
+-> 화이트와인
+
+
+
+![alt](/assets/img/5.1오른쪽.png)
+
+음성 클래스가 81개 양성 클래스가 2194개로 대부분의 화이트 와인이 이 노드로 이동했다
+
+노드 바탕 색도 의미가 있다. filled=True로 지정하면 클래스마다 색깔을 부여하고 어떤 클래스의 비율이 높아지면 점점 진한 색으로 표시한다
+
+![alt](/assets/img/5.1왼쪽.png)
+
+루트 노드보다 화이트와인 비율이 크게 줄었다. 
+
+결정트리에서 리프 노드가 가장 많은 클래스가 예측 클래스가 된다. k-최근접 이웃과 비슷하다. 결정트리를 여기까지 한다고 하면 왼쪽 노드에 도달한 샘플과 오른쪽 노드에 도달한 샘플은 모두 양성 클래스로 예측된다. 두 노드 모두 양성 클래스의 개수가 많기 때문이다
+
+??
+
+### 불순도
+gini는 `지니 불순도`를 의미한다. 
+DecisionTreeClassifier 
