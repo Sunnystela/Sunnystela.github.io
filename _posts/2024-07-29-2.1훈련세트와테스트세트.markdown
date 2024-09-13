@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "[머신러닝] 2-1. 훈련 세트와 테스트 세트"
+title:  "[머신러닝]/ 2-1. 훈련 세트와 테스트 세트"
 date:   2024-07-29 13:11
 categories: KHUDA MachineLearning 혼공머신 2.데이터다루기
 tag: 혼공머신
