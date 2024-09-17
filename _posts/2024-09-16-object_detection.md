@@ -23,11 +23,13 @@ classification with localization을 좀 더 자세하게 알아보자.
 여러 layer로 이루어진 ConvNet에 이미지를 입력해서 softmax unit 이라는 output vactor로 class를 예측할 수 있다.
 
 > Convnet(CNN)<br>
-수십 수백개의 계층을 가질 수 있으며 각 계층은 영상의 서로 다른 특징을 뽑아낸다. {: .prompt-info }
+수십 수백개의 계층을 가질 수 있으며 각 계층은 영상의 서로 다른 특징을 뽑아낸다. 
+{: .prompt-info }
 
 
 > Softmax<br>
-입력받은 값을 출력으로 0~1사이의 값으로 모두 정규화하며 출력 값들의 총합은 항상 1이 되는 특성을 가진 함수이다.<br>다중 클래스 분류 문제에서 주로 사용되며, 각 클래스에 대한 확률을 계산한다. {: .prompt-info }
+입력받은 값을 출력으로 0~1사이의 값으로 모두 정규화하며 출력 값들의 총합은 항상 1이 되는 특성을 가진 함수이다.<br>다중 클래스 분류 문제에서 주로 사용되며, 각 클래스에 대한 확률을 계산한다. 
+{: .prompt-info }
 
 
 ![alt](/assets/img/cv2.soft.png)
