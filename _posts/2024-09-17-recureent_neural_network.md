@@ -284,3 +284,108 @@ similarity function으로는 cosine similarity나 유클리디안 거리를 가�
 
 ![alt](/assets/img/cv3.com.png)
 
+일반적으로 fixed historical window를 사용한다. 긴 문장이나 짧은 문장이나 항상 바로 앞의 4개의 단어만 살펴보는 것이다. 이것은 입력으로 1200차원의 vector를 사용해서 softmax output으로 예측하는 것을 의미한다. Matrix E를 학습한다
+
+왼쪽과 오른쪽 4개의 단어를 선택할 수도 있고, 다른 Context를 선택할 수도 있다.
+ 마지막 한 단어만 선택할 수도 있고, 가장 가까운 단어 하나를 사용할 수도 있다.
+
+# Word2Vec
+단어를 벡터로 바꿔주는 알고리즘이다. 
+
+![alt](/assets/img/cv3.skip.png)
+
+skip gram은 중심 단어를 무작위로 선택하고 주변 단어를 예측한다. 
+
+단어들의 one-hot vector와 Embedding Matrix E로 Embedding vector를 구할 수 있다. 이렇게 구한 Embedding vector를 입력으로 softmax layer를 통과해서 output 
+y햇을 구할 수 있다.
+
+단점: 계산 속도가 느리다. <br>
+-> hierarchical softmax 사용하기<br>
+tree 를 사용한다. 자주 사용되는 단어일수록 top에 위칳고 그렇지 않으면 bottom에 위치한다. 단어를 찾을 때 트리를 찾아 내려가 선형 크기가 아닌 voca 사이즈의 log 사이즈로 탐색하게 되어 소프트맥스보다 빠르다. 
+
+# Negative Sampling
+
+skip gram 보다 조금 더 효율적이다.
+
+![alt](/assets/img/cv3.pro.png)
+
+문제로 orange-juice와 같은 positive training set이 있다면 무작위로 negative training set을 K개를 샘플링한다. 이때, 무작위로 negative 단어를 선택할 때에는 voca에 존재하는 단어 중에서 무작위로 선택한다. 
+
+우연히 'of'라는 단어를 선택할 수도 있는데, 이는 context에 존재하는 단어이므로 실제로는 positive이지만, 일단 negative라고 취급한다.
+
+이렇게 training set을 만든다.
+작은 데이터 셋의 경우에는 K를 5~20의 값으로 추천하고, 큰 데이터 셋을 가지고 있다면 K를 더 작은 값인 2~5의 값으로 하는게 좋다
+
+context와 target이 input x가 되고, positive와 negative는 output y가 된다. logistic regression model로 정의할 수 있게 된다. 
+
+1만 차원의 softmax가 아닌 1만 차원의 이진분류 문제가 되어서 계산량이 훨씬 줄어들게 된다.
+
+
+![alt](/assets/img/cv3.mappling.png)
+
+얼마나 자주 다른 단어들이 나타나는 지에 따라서 샘플링할 수 있다. 또 다른 방법으로는 1/voca size를 사용해서 무작위로 샘플링하는 것이다. 이 방법은 영어 단어의 분포를 생각하지 않는다.
+
+# GloVe word vectors
+
+단순한 모델이다. 
+
+![alt](/assets/img/cv3.glo.png)
+
+말뭉치에서 context와 target 단어들에 대해 i에서 j가 몇번 나타나는지 구하는 작업을 한다. 서로 가까운 단어를 캡처하며 범위를 어떻게 지정하냐에 따라 X <sub>ij</sub>
+​
+ ==X <sub>
+ji</sub>
+​
+ 가 될 수도 있고, 아닐 수도 있다.
+
+ ![alt](/assets/img/cv3.good.png)
+
+f(x<sub>ij</sub>)는 weighting term이다. 이는 한번도 등장하지 않는 경우에 0으로 설정하여 더하지 않게 해준다. 지나치게 빈도가 높거나 낮은 단어로 특정값 이상으로 되는 것을 방지한다. 
+
+# Sentiment classification
+
+![alt](/assets/img/cv3.classific.png)
+
+입력이 있을 때, 각 단어들을 임베딩 vector(300D)로 변환하고 각 단어의 벡터의 값들의 평균을 구해서 softmax output으로 결과를 예측하는 모델을 만들 수 있다. 
+
+임베딩을 사용했기 때문에, 작은 dataset이나 자주 사용되지 않는 단어가 입력으로 들어오더라도 해당 모델에 적용할 수 있다.
+
+단어의 순서를 무시하고 단순 나열된 형태로 입력하기 때문에 좋은 모델은 아니다.
+
+예를 들어 'Completely lacking in good taste, good service, and good ambience'라는 리뷰가 있다면, good이라는 단어가 많이 나왔기 때문에 positive로 예측할 수도 있다. 
+<br>-> RNN 사용
+
+시퀀스의 순서를 고려하기 때문에 해당 리뷰가 부정적이라는 것을 알 수 있게 된다. 
+
+# Debiasing word embeddings
+
+단어 임베딩에서 성별이나 나이, 인종 등의 편견을 반영하기 때문에 이것을 없애는 것은 매우 중요하다. 
+
+![alt](/assets/img/cv3.bias.png)
+
+
+1. 편향 방향을 구한다.<br>
+e 
+he
+​
+ −e 
+she
+​
+ ,e 
+male
+​
+ −e 
+female
+​
+  등의 성별을 나타낼 수 있는 단어들의 차이를 구해서 구할 수 있는데, 남성성의 단어와 여성성의 단어의 차이를 구해서 평균으로 그 방향을 결정할 수 있다.
+
+![alt](/assets/img/cv3.neu.png)
+
+  2. neutralize 작업을 수행한다.<br>
+편향 요소를 제거해야 한다. 각 단어의 편향 방향 요소를 제거한다. doctor나 babysitter등의 단어의 성별 bias를 제거한다.
+
+
+
+![alt](/assets/img/cv3.equalize.png)
+3. equalize pairs 작업을 수행한다.<br>
+boy-girl / grandfather-grandmother과 같은 단어는 각 단어가 성별 요소가 있기 때문에, 이러한 단어들이 bias direction을 기준으로 같은 거리에 있도록 한다. 
