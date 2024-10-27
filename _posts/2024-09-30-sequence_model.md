@@ -121,7 +121,7 @@ x
  
 P(y⋆ ∣x) > P( y^​ ∣x)| P(y ⋆ ∣x) <= P(y^​ ∣x)|
 |---|---|
-|Beam Search가 더 높은 확률의 번역을 선택하지 못한 것이므로 Beam Search 알고리즘에 문제가 있다고 판단할 수 있다.| RNN 모델이 잘못된 번역을 더 높은 확률로 예측했으므로, RNN 모델에 문제가 있다고 판단할 수 있다.
+|Beam Search가 더 높은 확률의 번역을 <br>선택하지 못한 것이므로 Beam Search<br> 알고리즘에 문제가 있다고 판단할 수 <br>있다.| RNN 모델이 잘못된 번역을 <br>더 높은 확률로 예측했으므로, <br>RNN 모델에 문제가 있다고 판단할 수 있다.
 
 
 # Bleu (Blingual Evaluation Understudy) Score
