@@ -4,10 +4,16 @@ icon: fas fa-info-circle
 order: 4
 ---
 
-
 <h1 align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&size=24&duration=4000&pause=500&color=3776AB&center=true&vCenter=true&width=450&lines=Hello,+I'm+Minseo+Kim!;Always+learning+and+exploring!">
+  <img src="https://media.giphy.com/media/hvRJCLFzcasrR4ia7z/giphy.gif" width="40px"/>
+  Hello, I'm Minseo Kim!
 </h1>
+
+<p align="center">
+  <!-- <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&size=24&duration=4000&pause=500&color=3776AB&center=true&vCenter=true&width=450&lines=Always+learning+and+exploring!" alt="Typing Animation"> -->
+</p>
+
+
 
 
 
