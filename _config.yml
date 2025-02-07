@@ -14,9 +14,9 @@ timezone: Asia/Seoul
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: 만수의 만수무강 # the main title
+title: Minseolog # the main title
 
-tagline: 계속해서 성장 중인 개발 공부 블로그 # it will display as the sub-title
+tagline: Development Study Blog Continues to Grow # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   경희대학교 컴퓨터공학과
