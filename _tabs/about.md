@@ -53,9 +53,17 @@ order: 4
 ---
 
 ## 🔥 Projects  
+### 🤖 AI 
 - 🎼 **AI-based Harmony Generator** – Analyzes melodies and suggests harmonies automatically  
-<!-- - 💤 **Drowsiness Detection System** – YOLO-based real-time eye state detection and alert system   -->
 
+### 👁️ Computer Vision  
+- 💤 **Don’t Close Your Eyes!** 
+- 👕 **Musinsa Clothing Image Search** – recommend similar clothing items when a user uploads a picture.  
+
+### 📜 Data
+- 📏 **Shipping Distance Calculator** – A web application that calculates the optimal delivery distance based on the user's location.  
+
+<!-- - 💤 **Drowsiness Detection System** – YOLO-based real-time eye state detection and alert system   -->
 ---
 
 ## 🏅 Awards  
