@@ -6,16 +6,10 @@ order: 4
 
 
 <h1 align="center">
-  <!-- <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&size=24&duration=4000&pause=500&color=3776AB&center=true&vCenter=true&width=450&lines=Hello,+I'm+Minseo+Kim!;Always+learning+and+exploring!"> -->
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&size=24&duration=4000&pause=500&color=3776AB&center=true&vCenter=true&width=450&lines=Hello,+I'm+Minseo+Kim!;Always+learning+and+exploring!">
 </h1>
 
 
-<p align="center">
-  <img src="https://img.shields.io/badge/-Python-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
-  <img src="https://img.shields.io/badge/-C-A8B9CC?style=for-the-badge&logo=c&logoColor=white"/>
-  <img src="https://img.shields.io/badge/-C++-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white"/>
-  <!-- <img src="https://img.shields.io/badge/-Web_Development-FF6F00?style=for-the-badge&logo=html5&logoColor=white"/> -->
-</p>
 
 ---
 
