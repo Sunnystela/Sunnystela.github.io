@@ -4,8 +4,8 @@ icon: fas fa-info-circle
 order: 4
 ---
 
-
 <!---
+
 <h1 align="center">
   <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&size=24&duration=4000&pause=500&color=3776AB&center=true&vCenter=true&width=450&lines=Hello,+I'm+Minseo+Kim!;
   Always+learning+and+exploring!">
@@ -17,7 +17,7 @@ order: 4
   <img src="https://img.shields.io/badge/-C-A8B9CC?style=for-the-badge&logo=c&logoColor=white"/>
   <img src="https://img.shields.io/badge/-C++-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white"/>
   <!-- <img src="https://img.shields.io/badge/-Web_Development-FF6F00?style=for-the-badge&logo=html5&logoColor=white"/> -->
-<!---</p>
+</p>
 
 ---
 
@@ -52,7 +52,6 @@ order: 4
 - ![Docker](https://img.shields.io/badge/-Docker-2496ED?style=flat&logo=docker&logoColor=white)
 - ![Git](https://img.shields.io/badge/-Git-F05032?style=flat&logo=git&logoColor=white)
  -->
-<!---
 ---
 
 ## 🔥 Projects  
@@ -67,20 +66,18 @@ order: 4
 - 📏 **Shipping Distance Calculator** – A web application that calculates the optimal delivery distance based on the user's location.  
 
 <!-- - 💤 **Drowsiness Detection System** – YOLO-based real-time eye state detection and alert system   -->
-<!---
 ---
 
 ## 🏅 Awards  
 <!-- 🏆 **Yonsei University AI Hackathon 2024 - Excellence Award**   -->
-<!---
+
 ---
 
 ## 📌 Status  
 <!-- - 📚 Studying **Object-Oriented Programming (OOP)**  
 - 🎯 Preparing for **TOEIC (Target: 880)**   -->
 <!-- - 🎨 Researching **Interactive Media Art & HCI**   -->
-<!---
+
 ---
 
 💡 *Always eager to learn and explore new technologies!* 🚀
---->
