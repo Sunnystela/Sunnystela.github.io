@@ -4,7 +4,6 @@ icon: fas fa-info-circle
 order: 4
 ---
 
-<!---
 
 <h1 align="center">
   <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&size=24&duration=4000&pause=500&color=3776AB&center=true&vCenter=true&width=450&lines=Hello,+I'm+Minseo+Kim!;
