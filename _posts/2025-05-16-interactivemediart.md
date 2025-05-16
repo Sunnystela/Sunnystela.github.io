@@ -1,9 +1,9 @@
 ---
 layout: post
 title:  "[논문정리] Visual Effects Using Human Pose Recognition and Style Transform by Kinect" 
-date:   2025-05-16 17:28
-categories: mystudy 
-tags: interactive
+date:   2025-05-16 10:28
+categories: mystudy Mix
+tags: Interactive Mix
 ---
 
 > Youngrock Lo, Hasil Park, & Joonki Paik (2021). Visual Effects Using Human Pose Recognition and Style Transform by Kinect. TECHART: Journal of Arts and Imaging Science, 8(2), 12-14. 10.15323/techart.2021.5.8.2.12
