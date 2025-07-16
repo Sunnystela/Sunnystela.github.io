@@ -1,10 +1,11 @@
 ---
 layout: post
 title:  "리액트 네이티브 걸음마"
-date:   2025-07-16 16:17
+date:   2025-07-16 15:17
 categories: mystudy
 tag: 
 ---
+
 
 # 감자의 리액트 네이티브 벼락치기
 1. node 설치
