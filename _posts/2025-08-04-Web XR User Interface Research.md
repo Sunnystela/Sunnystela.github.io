@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "[논문정리] Web XR User Interface Research: Design 3D Layout Framework in Static Websites" 
-date:   2025-08-04 22:35
+date:   2025-08-04 20:35
 categories: mystudy Mix
 tags: Interactive Mix
 ---
