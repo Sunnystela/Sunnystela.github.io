@@ -9,7 +9,7 @@ tags: Interactive Mix
 > Youngrock Lo, Hasil Park, & Joonki Paik (2021). Visual Effects Using Human Pose Recognition and Style Transform by Kinect. TECHART: Journal of Arts and Imaging Science, 8(2), 12-14. 10.15323/techart.2021.5.8.2.12
 {: .prompt-tip }
 
-진로 변경하고 원래 희망진로 였던 CV와 관련되면서 지금 관심있는 인터랙티브 미디어아트 학술 저널을 읽어보기로 했다. 
+CV와 관련되면서 지금 관심있는 인터랙티브 미디어아트 학술 저널을 읽어보기로 했다. 
 
 # Abstract
 인간의 포즈 인식과 스타일 전이를 이용하는 인터랙티브 미디어 아트를 제시한다. 여기서는 kniect를 이용해 시각화한다. 
