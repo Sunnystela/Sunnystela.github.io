@@ -1,0 +1,15 @@
+---
+layout: post
+title:  "[논문정리] Generative Adversarial Nets" 
+date:   2025-11-03 20:35
+categories: mystudy CV
+tags: CV
+---
+
+전에 읽긴 했지만 정리해 둔 것이 없길래 정리 겸 다시 읽었다. 
+
+>  Ian J. Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley,
+ Sherjil Ozair, Aaron Courville, Yoshua Bengio(2014). Generative Adversarial Nets. arXiv.
+{: .prompt-tip }
+
+Generative Adversarial Nets(GANs)라는 새로운 프레임워크를 제안하며 이는 생성 모델 G와 판별 모델 D를 경쟁시키는 방식으로 작동한다. 위조범과 경찰처럼 두 모델이 서로를 상대로 훈련하며 데이터 분포를 정확하게 복제하는 
