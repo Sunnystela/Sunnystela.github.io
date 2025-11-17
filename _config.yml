@@ -227,7 +227,7 @@ jekyll-archives:
     tag: /tags/:name/
     category: /categories/:name/
 
-# Conversion
+# Math equation
 markdown: kramdown
 highlighter: rouge
 lsi: false
