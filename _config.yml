@@ -163,7 +163,6 @@ kramdown:
     block:
       line_numbers: true
       start_line: 1
-  math_engine: mathjax
 
 collections:
   tabs:
@@ -227,9 +226,3 @@ jekyll-archives:
     tag: /tags/:name/
     category: /categories/:name/
 
-# Math equation
-markdown: kramdown
-highlighter: rouge
-lsi: false
-excerpt_separator: "\n\n"
-incremental: false
