@@ -2,8 +2,8 @@
 layout: post
 title:  "[논문정리] Web XR User Interface Research: Design 3D Layout Framework in Static Websites" 
 date:   2025-08-04 20:35
-categories: mystudy Mix
-tags: Interactive Mix
+categories: MyStudy Mix
+tags: Interactive 
 ---
 
 > XING Y., Shell J., Fahy C., Xie T., Kwan H. Y., Xie W. Web XR User Interface Research: Design 3D Layout Framework in Static Websites // Applied Sciences (Switzerland). 2022. Vol. 12. No. 11. p. 5600.

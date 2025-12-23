@@ -2,8 +2,8 @@
 layout: post
 title:  "[논문정리] Generative Adversarial Nets" 
 date:   2025-11-03 20:35
-categories: mystudy CV
-tags: CV
+categories: MyStudy AI
+tags: CV GAN
 ---
 
 전에 읽긴 했지만 정리해 둔 것이 없길래 정리 겸 다시 읽었다. 

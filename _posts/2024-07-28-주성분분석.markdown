@@ -2,7 +2,7 @@
 layout: post
 title:  "행렬 분해와 차원 축소 - 주성분 분석"
 date:   2024-07-28 17:28
-categories: mystudy AI PCA
+categories: MyStudy AI
 tags: PCA
 ---
 

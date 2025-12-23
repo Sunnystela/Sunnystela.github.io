@@ -2,7 +2,7 @@
 layout: post
 title:  "리액트 네이티브 걸음마"
 date:   2025-07-16 15:17
-categories: mystudy react
+categories: MyStudy react
 tag: react
 ---
 

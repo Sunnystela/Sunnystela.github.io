@@ -2,7 +2,7 @@
 layout: post
 title:  "TypeScript 기초 입력 방법"
 date:   2025-07-16 10:00
-categories:  mystudy react
+categories:  MyStudy react
 tag: react
 ---
 
