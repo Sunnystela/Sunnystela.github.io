@@ -14,28 +14,43 @@ order: 4
 </p> -->
 
 
-# 👋 Hello, I'm Minseo Kim!  
-> **Always learning and exploring!**  
 
 
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&width=435&lines=Hello%2C+I'm+MinSeo+Kim!)](https://git.io/typing-svg)
+
+**Always learning and exploring!**  
+
+  <img src="https://render.gitanimals.org/lines/Sunnystela?pet-id=1" width="1000" height="120"/>
+
+---
+
+## About Me  
+**Computer Science Student at Kyung Hee Univ.**  
+Passionate about AI, Interactive Media Art & Human-Computer Interaction
 
 
 ---
 
-## 🏆 About Me  
-🎓 **Computer Science Student at Kyung Hee Univ.**  
-🚀 **Passionate about AI, Interactive Media Art & Human-Computer Interaction**  
-
+### Experience
+<!-- - **KDST Deep Learning Lab** | Intern (2025.12 - Present)
+  - Multi-modal Study & Basic Research -->
+- **GDGoC AI Part** | AI Part (2025.09 - 2025.12)
+  - **Study Union Project 1st Place** 🏆
+  - MLOps Project & IT Trend Analysis
+- **D.COM (KHU Department Club)** | Education (2025.03 - 2025.07)
+  - Python training for freshmen
+- **KHUDA (AI Central Club)** | CV & PR (2024.07 - 2025.07)
+  - CV/ML Study & Datathon Management
+  - PR Department Management (Poster & Card News Production)
 
 ---
 
-## 📬 Contacts  
+## Contacts  
 📧 **Email**: [kiminse05@naver.com](mailto:kiminse05@naver.com) | [kiminseo@khu.ac.kr](mailto:kiminseo@khu.ac.kr)  
 🐙 **GitHub**: [Sunnystela](https://github.com/Sunnystela)  
 
----
 
-## 🛠 Tech Stack  
+<!-- ## 🛠 Tech Stack  
 ### 🖥️ Programming Languages  
 - ![Python](https://img.shields.io/badge/-Python-3776AB?style=flat&logo=python&logoColor=white)
 - ![C](https://img.shields.io/badge/-C-A8B9CC?style=flat&logo=c&logoColor=white)
@@ -46,7 +61,7 @@ order: 4
 - ![CSS3](https://img.shields.io/badge/-CSS3-1572B6?style=flat&logo=css3)
 - ![JavaScript](https://img.shields.io/badge/-JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
 
-### ⚙️ Tools & Frameworks  
+### ⚙️ Tools & Frameworks   -->
 <!-- - ![PyTorch](https://img.shields.io/badge/-PyTorch-EE4C2C?style=flat&logo=pytorch&logoColor=white)
 - ![OpenCV](https://img.shields.io/badge/-OpenCV-5C3EE8?style=flat&logo=opencv&logoColor=white)
 - ![FastAPI](https://img.shields.io/badge/-FastAPI-009688?style=flat&logo=fastapi&logoColor=white)
@@ -55,30 +70,26 @@ order: 4
  -->
 ---
 
-## 🔥 Projects  
-### 🤖 AI 
+## Projects  
+### AI 
 - 🎼 **AI-based Harmony Generator** – Analyzes melodies and suggests harmonies automatically  
-
-### 👁️ Computer Vision  
 - 💤 **Don’t Close Your Eyes!** 
 - 👕 **Musinsa Clothing Image Search** – recommend similar clothing items when a user uploads a picture.  
 
-### 📜 Data
+### Data
 - 📏 **Shipping Distance Calculator** – A web application that calculates the optimal delivery distance based on the user's location.  
 
 <!-- - 💤 **Drowsiness Detection System** – YOLO-based real-time eye state detection and alert system   -->
 ---
 
-## 🏅 Awards  
-<!-- 🏆 **Yonsei University AI Hackathon 2024 - Excellence Award**   -->
+
+
+## Education
+- **Kyung Hee University** | Computer Science (2024.03 - Present)
+  
+- **CHUNGNAM SAMSUNG ACADEMY** | IT & Arts Diploma (2019.03 - 2024.02)
+  - Dual & Advanced Diploma
 
 ---
 
-## 📌 Status  
-<!-- - 📚 Studying **Object-Oriented Programming (OOP)**  
-- 🎯 Preparing for **TOEIC (Target: 880)**   -->
-<!-- - 🎨 Researching **Interactive Media Art & HCI**   -->
-
----
-
-💡 *Always eager to learn and explore new technologies!* 🚀
+*Always eager to learn and explore new technologies!* 
