@@ -20,7 +20,7 @@ order: 4
 
 **Always learning and exploring!**  
 
-  <img src="https://render.gitanimals.org/lines/Sunnystela?pet-id=1" width="1000" height="120"/>
+  <!-- <img src="https://render.gitanimals.org/lines/Sunnystela?pet-id=1" width="1000" height="120"/> -->
 
 ---
 
@@ -28,6 +28,11 @@ order: 4
 **Computer Science Student at Kyung Hee Univ.**  
 Passionate about AI, Interactive Media Art & Human-Computer Interaction
 
+---
+
+## Contacts  
+📧 **Email**: [kiminse05@naver.com](mailto:kiminse05@naver.com) | [kiminseo@khu.ac.kr](mailto:kiminseo@khu.ac.kr)  
+🐙 **GitHub**: [Sunnystela](https://github.com/Sunnystela)  
 
 ---
 
@@ -43,11 +48,7 @@ Passionate about AI, Interactive Media Art & Human-Computer Interaction
   - CV/ML Study & Datathon Management
   - PR Department Management (Poster & Card News Production)
 
----
 
-## Contacts  
-📧 **Email**: [kiminse05@naver.com](mailto:kiminse05@naver.com) | [kiminseo@khu.ac.kr](mailto:kiminseo@khu.ac.kr)  
-🐙 **GitHub**: [Sunnystela](https://github.com/Sunnystela)  
 
 
 <!-- ## 🛠 Tech Stack  
