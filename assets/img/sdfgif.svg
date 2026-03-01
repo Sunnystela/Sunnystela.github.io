@@ -1,0 +1,73 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- 제목 -->
+  <rect x="279" y="30" width="242" height="40" rx="5" fill="#f5f5f5" stroke="#e5e5e5"/>
+  <text x="400" y="50" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#0a0a0a" text-anchor="middle" dominant-baseline="middle">부호 있는 거리 함수 (SDF)</text>
+
+  <!-- 거리 필드 시각화 (동심원) -->
+  <g stroke="#e5e5e5" fill="none" stroke-dasharray="4 4">
+    <circle cx="400" cy="320" r="240" />
+    <circle cx="400" cy="320" r="200" />
+    <circle cx="400" cy="320" r="160" />
+    <circle cx="400" cy="320" r="80" />
+    <circle cx="400" cy="320" r="40" />
+  </g>
+
+  <!-- 메인 객체 (표면) -->
+  <circle cx="400" cy="320" r="120" fill="#2563eb" fill-opacity="0.05" stroke="#0a0a0a" stroke-width="3"/>
+  <text x="400" y="320" font-family="Arial, sans-serif" font-size="14" fill="#737373" text-anchor="middle">객체 내부</text>
+
+  <!-- 범례 -->
+  <g font-family="Arial, sans-serif" font-size="14">
+    <rect x="65" y="500" width="170" height="40" rx="5" fill="#eff6ff" stroke="#2563eb" stroke-opacity="0.3"/>
+    <text x="150" y="520" fill="#2563eb" text-anchor="middle" dominant-baseline="middle">외부: d &gt; 0</text>
+    
+    <rect x="315" y="500" width="170" height="40" rx="5" fill="#ffffff" stroke="#0a0a0a" stroke-opacity="0.3"/>
+    <text x="400" y="520" fill="#0a0a0a" text-anchor="middle" dominant-baseline="middle">표면: d = 0</text>
+    
+    <rect x="565" y="500" width="170" height="40" rx="5" fill="#fef2f2" stroke="#2563eb" stroke-opacity="0.3"/>
+    <text x="650" y="520" fill="#2563eb" text-anchor="middle" dominant-baseline="middle">내부: d &lt; 0</text>
+  </g>
+
+  <!-- 탐사선 (Probe) 및 거리 측정 애니메이션 -->
+  <g>
+    <!-- 탐사 지점 -->
+    <circle r="6" fill="#2563eb">
+      <animateMotion dur="6s" repeatCount="indefinite" path="M 100 320 L 500 320 L 100 320" />
+    </circle>
+    
+    <!-- 표면까지의 거리 선 -->
+    <line y1="320" y2="320" stroke="#2563eb" stroke-width="2" stroke-dasharray="2 2">
+      <animate attributeName="x1" dur="6s" repeatCount="indefinite" values="100;280;400;520;500;520;400;280;100" />
+      <animate attributeName="x2" dur="6s" repeatCount="indefinite" values="280;280;280;520;520;520;520;280;280" />
+    </line>
+
+    <!-- 실시간 거리 값 텍스트 -->
+    <text y="300" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#2563eb" text-anchor="middle">
+      <tspan x="0">d = </tspan>
+      <animateMotion dur="6s" repeatCount="indefinite" path="M 100 320 L 500 320 L 100 320" />
+      <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="1;1;1;1;1" />
+    </text>
+  </g>
+
+  <!-- 상태 표시 텍스트 애니메이션 -->
+  <g font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle">
+    <!-- 외부 상태 -->
+    <text x="400" y="150" fill="#2563eb" opacity="0">
+      양수 (+) : 객체 밖
+      <animate attributeName="opacity" values="1;0;0;0;1" dur="6s" repeatCount="indefinite" />
+    </text>
+    <!-- 표면 상태 -->
+    <text x="400" y="150" fill="#0a0a0a" opacity="0">
+      0 : 표면 도달
+      <animate attributeName="opacity" values="0;1;0;1;0" keyTimes="0;0.3;0.5;0.7;1" dur="6s" repeatCount="indefinite" />
+    </text>
+    <!-- 내부 상태 -->
+    <text x="400" y="150" fill="#2563eb" opacity="0">
+      음수 (-) : 객체 안
+      <animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;0.4;0.5;0.6;1" dur="6s" repeatCount="indefinite" />
+    </text>
+  </g>
+
+  <!-- 설명 가이드 -->
+  <text x="400" y="570" font-family="Arial, sans-serif" font-size="12" fill="#737373" text-anchor="middle">SDF는 공간의 각 점에서 가장 가까운 표면까지의 거리를 부호와 함께 정의합니다.</text>
+</svg>
