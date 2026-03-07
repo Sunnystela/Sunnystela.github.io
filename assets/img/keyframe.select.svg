@@ -1,0 +1,102 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- 제목 -->
+  <text x="400" y="60" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#0a0a0a">비디오 키프레임 선택 (Keyframe Selection)</text>
+  
+  <!-- 범례 -->
+  <g transform="translate(250, 110)">
+    <rect x="0" y="0" width="20" height="20" fill="#2563eb" rx="4"/>
+    <text x="30" y="15" font-family="Arial, sans-serif" font-size="14" fill="#737373">중요 프레임 (Keyframe)</text>
+    <rect x="180" y="0" width="20" height="20" fill="#e5e5e5" rx="4"/>
+    <text x="210" y="15" font-family="Arial, sans-serif" font-size="14" fill="#737373">일반 프레임 (Skip)</text>
+  </g>
+
+  <!-- 타임라인 베이스 -->
+  <rect x="100" y="295" width="600" height="10" fill="#f5f5f5" rx="5"/>
+  
+  <!-- 프레임 그룹 -->
+  <g id="frames" transform="translate(105, 250)">
+    <!-- Frame 1 -->
+    <rect x="0" y="0" width="50" height="70" fill="#e5e5e5" rx="4" stroke="#737373" stroke-width="1"/>
+    <text x="25" y="85" text-anchor="middle" font-size="10" fill="#737373">F1</text>
+    
+    <!-- Frame 2 (Keyframe) -->
+    <rect x="60" y="0" width="50" height="70" fill="#e5e5e5" rx="4" stroke="#737373" stroke-width="1">
+      <animate id="k1" attributeName="fill" from="#e5e5e5" to="#2563eb" begin="0.8s;loop.end" dur="0.3s" fill="freeze" />
+      <animate attributeName="height" from="70" to="80" begin="0.8s;loop.end" dur="0.3s" fill="freeze" />
+      <animate attributeName="y" from="0" to="-5" begin="0.8s;loop.end" dur="0.3s" fill="freeze" />
+    </rect>
+    <text x="85" y="85" text-anchor="middle" font-size="10" fill="#737373">F2</text>
+    <text x="85" y="-15" text-anchor="middle" font-size="12" font-weight="bold" fill="#2563eb" opacity="0">
+      선택됨
+      <animate attributeName="opacity" from="0" to="1" begin="0.8s;loop.end" dur="0.3s" fill="freeze" />
+    </text>
+
+    <!-- Frame 3 -->
+    <rect x="120" y="0" width="50" height="70" fill="#e5e5e5" rx="4" stroke="#737373" stroke-width="1"/>
+    <text x="145" y="85" text-anchor="middle" font-size="10" fill="#737373">F3</text>
+
+    <!-- Frame 4 -->
+    <rect x="180" y="0" width="50" height="70" fill="#e5e5e5" rx="4" stroke="#737373" stroke-width="1"/>
+    <text x="205" y="85" text-anchor="middle" font-size="10" fill="#737373">F4</text>
+
+    <!-- Frame 5 (Keyframe) -->
+    <rect x="240" y="0" width="50" height="70" fill="#e5e5e5" rx="4" stroke="#737373" stroke-width="1">
+      <animate id="k2" attributeName="fill" from="#e5e5e5" to="#2563eb" begin="2.3s;loop.end" dur="0.3s" fill="freeze" />
+      <animate attributeName="height" from="70" to="80" begin="2.3s;loop.end" dur="0.3s" fill="freeze" />
+      <animate attributeName="y" from="0" to="-5" begin="2.3s;loop.end" dur="0.3s" fill="freeze" />
+    </rect>
+    <text x="265" y="85" text-anchor="middle" font-size="10" fill="#737373">F5</text>
+    <text x="265" y="-15" text-anchor="middle" font-size="12" font-weight="bold" fill="#2563eb" opacity="0">
+      선택됨
+      <animate attributeName="opacity" from="0" to="1" begin="2.3s;loop.end" dur="0.3s" fill="freeze" />
+    </text>
+
+    <!-- Frame 6 -->
+    <rect x="300" y="0" width="50" height="70" fill="#e5e5e5" rx="4" stroke="#737373" stroke-width="1"/>
+    <text x="325" y="85" text-anchor="middle" font-size="10" fill="#737373">F6</text>
+
+    <!-- Frame 7 -->
+    <rect x="360" y="0" width="50" height="70" fill="#e5e5e5" rx="4" stroke="#737373" stroke-width="1"/>
+    <text x="385" y="85" text-anchor="middle" font-size="10" fill="#737373">F7</text>
+
+    <!-- Frame 8 (Keyframe) -->
+    <rect x="420" y="0" width="50" height="70" fill="#e5e5e5" rx="4" stroke="#737373" stroke-width="1">
+      <animate id="k3" attributeName="fill" from="#e5e5e5" to="#2563eb" begin="3.8s;loop.end" dur="0.3s" fill="freeze" />
+      <animate attributeName="height" from="70" to="80" begin="3.8s;loop.end" dur="0.3s" fill="freeze" />
+      <animate attributeName="y" from="0" to="-5" begin="3.8s;loop.end" dur="0.3s" fill="freeze" />
+    </rect>
+    <text x="445" y="85" text-anchor="middle" font-size="10" fill="#737373">F8</text>
+    <text x="445" y="-15" text-anchor="middle" font-size="12" font-weight="bold" fill="#2563eb" opacity="0">
+      선택됨
+      <animate attributeName="opacity" from="0" to="1" begin="3.8s;loop.end" dur="0.3s" fill="freeze" />
+    </text>
+
+    <!-- Frame 9 -->
+    <rect x="480" y="0" width="50" height="70" fill="#e5e5e5" rx="4" stroke="#737373" stroke-width="1"/>
+    <text x="505" y="85" text-anchor="middle" font-size="10" fill="#737373">F9</text>
+
+    <!-- Frame 10 -->
+    <rect x="540" y="0" width="50" height="70" fill="#e5e5e5" rx="4" stroke="#737373" stroke-width="1"/>
+    <text x="565" y="85" text-anchor="middle" font-size="10" fill="#737373">F10</text>
+  </g>
+
+  <!-- 재생 헤드 (Scanner) -->
+  <g>
+    <line x1="100" y1="230" x2="100" y2="370" stroke="#0a0a0a" stroke-width="3" stroke-linecap="round">
+      <animate id="loop" attributeName="x1" from="100" to="700" dur="5s" repeatCount="indefinite" />
+      <animate attributeName="x2" from="100" to="700" dur="5s" repeatCount="indefinite" />
+    </line>
+    <polygon points="90,220 110,220 100,235" fill="#0a0a0a">
+      <animate attributeName="points" from="90,220 110,220 100,235" to="690,220 710,220 700,235" dur="5s" repeatCount="indefinite" />
+    </polygon>
+  </g>
+
+  <!-- 설명 텍스트 박스 -->
+  <g transform="translate(400, 480)">
+    <rect x="-160" y="0" width="320" height="60" fill="none" stroke="#e5e5e5" stroke-width="1" rx="8"/>
+    <text x="0" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#0a0a0a">
+      <tspan x="0" dy="0">알고리즘이 영상의 변화를 감지하여</tspan>
+      <tspan x="0" dy="22">의미 있는 '키프레임'만 추출합니다.</tspan>
+    </text>
+  </g>
+</svg>
