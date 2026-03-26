@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[ing][논문정리] Learning Transferable Visual Models From Natural Language Supervision"
+title: "[논문정리] Learning Transferable Visual Models From Natural Language Supervision"
 date: 2026-03-16 12:50
 categories: MyStudy
 tags: AI language
