@@ -129,13 +129,13 @@ Spatial Control에 대해서 보자.
 ![alt](/assets/img/id.fig5.png)
 
 
-
+InstantID와 기존의 주요 개인화 생성 모델인 IP-Adapter(IPA) 계열 모델들의 성능을 비교한 결과.   
+InstantID가 단 한 장의 참조 이미지만으로도 추가 학습 없이 높은 수준의 개인화 성능을 보여준다는 것을 보인다.
 
 
 ![alt](/assets/img/id.fig7.png)
 
 
-다음 비교 (IP-Adapter)이다.
 
 
 ![alt](/assets/img/id.fig6.png)
