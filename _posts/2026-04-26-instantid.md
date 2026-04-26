@@ -54,6 +54,20 @@ Plug & Play, Zero-shot
 
 ![alt](/assets/img/id.fig2.png)
 
+오른쪽 위에 텍스트 조건과 왼쪽 얼굴 정보를 어떻게 분리, 결합해 UNet 기반 확산 생성과정에 주입하는지 시각화한다.  
+사전 학습된 확산 모델에 소형 학습 가능한 어뎁터와 face-id 임베딩을 추가해 1장 참조 이미지로 튜닝 없이도 제로샷으로 빠르게 높은 신원 충실도의 이미지를 생성하도록 설계된 플러그앤플레이 방법이다
+
+Face Encoder (강력한 의미론적 추출): 
+기존의 CLIP 이미지 인코더는 스타일이나 색상 등 모호한 정보를 캡처하는 한계가 있습니다.InstantID는 안면 인식에 특화된 ArcFace 모델을 사용하여 얼굴의 고유한 특징을 매우 정교하게 추출합니다.
+
+Image Adapter (시각적 프롬프트 주입): 
+추출된 얼굴 임베딩을 Decoupled Cross-Attention 메커니즘을 통해 확산 모델(UNet)에 주입합니다.이 모듈은 텍스트 프롬프트와 이미지 힌트가 서로 방해받지 않고 조화롭게 작용하도록 돕습니다.
+
+IdentityNet (세밀한 구조적 제어):  
+ControlNet의 구조를 변형한 핵심 모듈로, 5개의 얼굴 랜드마크(눈, 코, 입 위치)를 공간적 조건으로 사용합니다.특히 IdentityNet 내의 Cross-attention에서는 텍스트 정보를 배제하고 오직 ID 임베딩만을 조건으로 사용하여, 모델이 얼굴의 신원 정보에만 집중하도록 강제합니다.
+
+ArcFace 기반의 강력한 특징 추출과 IdentityNet을 통한 구조적 제약을 결합하여 실시간 서비스에 적용 가능한 수준의 압도적인 효율성과 정교함을 동시에 달성했다
+
 
 * Face Encoder
 * Image Adapter
@@ -108,9 +122,24 @@ Spatial Control에 대해서 보자.
 
 
 실험 결과, 얼굴 유사도가 매우 높게 유지된다.
+단일 참조 얼굴 이미지만으로 다양한 스타일, 포즈, 공간 제어 조건에서 신원(ID)을 얼마나 잘 보존하는지(robustness), 텍스트로 스타일을 바꿀 때의 편집성(editability), 그리고 기존 ControlNet 등과의 호환성(compatibility)을 보여준다. 전반적으로 한 장의 참조만으로도 높은 얼굴 충실도와 스타일 융합을 유지한다.
+
+"empty prompt": 텍스트 프롬프트 없이 오직 이미지 조건만으로 생성한 결과(완전 이미지 기반).  
+"style 1/2/3/4..." 등: 같은 참조 ID를 다양한 텍스트 스타일(예: "movie, coat", "female, dress red hat" 등)로 편집한 결과들을 보여줌 — 편집성 평가.  
+"canny control", "depth control" 등: 사전학습된 공간 제어(ControlNet 종류)를 추가했을 때 결과(호환성 평가).  
+맨 오른쪽 컬럼들은 비현실적/예술적 스타일(만화, 화려한 색채) 등에서의 결과를 포함해, 스타일 융합 성능을 평가함.
+
+
+
+
+
 
 
 ![alt](/assets/img/id.fig5.png)
+
+
+
+
 
 ![alt](/assets/img/id.fig7.png)
 
@@ -120,10 +149,9 @@ Spatial Control에 대해서 보자.
 
 ![alt](/assets/img/id.fig6.png)
 
-기존 방법보다 더 자연스럽고 정확한 얼굴을 생성한다.
+InstantID는 사전학습된 character LoRA들과 비교해 학습 없이도 경쟁력 있는 결과를 보였다
 
 LoRA와 비교를 해보면 
-
 학습 없이 성능 확보가 가능하다
 
 LoRA처럼 학습이 필요한 방법과 비교해도 경쟁력 있는 결과를 보입니다.
