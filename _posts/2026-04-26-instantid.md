@@ -82,6 +82,9 @@ Image Adapter는 이 정보를 diffusion 모델에 전달한다.
 cross-attention 구조를 사용한다.  
 추출된 얼굴 임베딩을 Decoupled Cross-Attention 메커니즘을 통해 확산 모델(UNet)에 주입합니다.이 모듈은 텍스트 프롬프트와 이미지 힌트가 서로 방해받지 않고 조화롭게 작용하도록 돕습니다.
 
+$$Z_{new} = \text{Attention}(Q, K_t, V_t) + \lambda \cdot \text{Attention}(Q, K_i, V_i)$$
+
+Q는 쿼리 행렬(query matrix), $K_t, V_t$ ​는 텍스트 교차-어텐션을 위한 키(key)와 값(value) 행렬, $K_i, V_i$ ​는 이미지 교차-어텐션을 위한 키와 값 행렬이다. $Q = ZW_q, K_i = c_i W_k^i​, V_i = c_i W_v^i$ ​이며, Z는 쿼리 특징, $c_i$​는 이미지 특징(여기서는 ID 임베딩)을 나타낸다. $W_k^i$​와 $W_v^i$만이 훈련 가능한 가중치입니다. 이 어댑터는 얼굴 디테일 복원을 강화하는 역할을 한다.
 
 **IdentityNet**
 
@@ -90,6 +93,15 @@ cross-attention 구조를 사용한다.
 IdentityNet은 얼굴 디테일을 유지하는 핵심 모듈이다.
 실제 사람처럼 보이게 만든다.  
 ControlNet의 구조를 변형한 핵심 모듈로, 5개의 얼굴 랜드마크(눈, 코, 입 위치)를 공간적 조건으로 사용합니다.특히 IdentityNet 내의 Cross-attention에서는 텍스트 정보를 배제하고 오직 ID 임베딩만을 조건으로 사용하여, 모델이 얼굴의 신원 정보에만 집중하도록 강제합니다.
+
+훈련 과정에서는 사전 학습된 diffusion 모델의 파라미터를 고정하고 Image Adapter와 IdentityNet의 파라미터만 최적화한다. 훈련 목표는 Stable Diffusion과 유사한 Denoising objective를 따른다.
+
+$$\mathcal{L} = \mathbb{E}_{z_t,t,C,C_i,\epsilon \sim N(0,1)}[||\epsilon - \epsilon_\theta(z_t, t, C, C_i)||^2_2]$$
+
+$C_i$​는 IdentityNet의 작업별 이미지 조건입니다. Image Adapter와 IdentityNet의 분리 설계는 이미지 조건들의 가중치를 독립적으로 유연하게 조절할 수 있게 한다.
+
+>텍스트 프롬프트를 완전히 제거하고 ID 임베딩만 사용하는 설계는 아키텍처 중 'IdentityNet' 모듈에만 해당되는 전략
+{: .prompt-warning }
 
 
 Spatial Control에 대해서 보자. 
