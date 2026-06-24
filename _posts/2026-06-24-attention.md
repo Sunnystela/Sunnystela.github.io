@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "[다시보기] Attention is All You Need"
-date:   2026-06-24 17:17
+date:   2026-06-24 11:17
 categories: AI CV 
 tag: CV
 math: true
