@@ -48,7 +48,7 @@ Positional Encoding을 활용할 수 있다.
 
 > self-attention
 자신에게 수행하는 어텐션 기법으로 단일 시퀀스에서 서로 다른 위치에 있는 요소들의 의존성을 찾아낸다. 
-{: .prompt-tip }
+{: .prompt-info }
 
 ## end-to-end memory network
 
@@ -107,6 +107,28 @@ K: 영향을 주는 벡터<br>
 V: 주는 영향의 가중치 벡터
 
 
+입력 X로부터
+
+$Q=XW_Q$
+	​
+
+$K=XW_K$
+
+$V=XW_V$
+
+
+를 만든다.
+
+즉 같은 입력으로부터 서로 다른 가중치 행렬을 통해 생성된다.
+
+> Q와 K  
+→ 누구를 얼마나 볼지 결정  
+→ Softmax  
+→ 중요도 생성
+→ V  
+→ 실제 정보 가져오기
+{: .prompt-warning }
+
 
 ![alt](/assets/img/cv5.out.png)
 
@@ -116,12 +138,16 @@ output: value의 가중합으로 계산한다<br>
 가중합에 이용되는 가중치: query와 연관된 key의 호환성 함수에 의해 계산된다
 
 
+> 왜 √dk로 나누는가?
+차원이 커질수록 $QK^T$ 값이 매우 커진다
+Softmax에 큰 값이 들어가면 0 또는 1에 가까운 값만 나온다. Gradient가 작아져 학습이 어려워지기 때문에 나눠서 분산을 조절한다. 
+{: .prompt-warning }
 
 #### Multi-Head Attention
 
 ![alt](/assets/img/cv5.multi.png)
 
-모델이 다양한 관점에서 문장을 해석할 수 있도록 해준다. 
+모델이 다양한 관점에서 문장을 해석할 수 있도록 해준다. 각각 head 가 보는 관계가 다르기에 여러 종류의 관계를 동시에 학습한다. 
 
 > 모델이 Head 개수만큼의 Scaled dot product Attention 연산을 수행할 수 있게 하여 모델이 다양한 관점의 Attention Map을 만들게한다.
 
@@ -189,6 +215,12 @@ $PE_{(pos, 2i)} = sin(pos / 10000^{2i/d_{model}})$
 $PE_{(pos, 2i+1)} = cos(pos / 10000^{2i/d_{model}})$ 
 
 이 방식은 모델이 상대적인 위치를 학습하는데 유리하다. 학습 시 보지 못했던 더 긴 시퀀스 길이에 대해서도 추론이 가능할 것이다. 
+
+> 왜 Sin/Cos를 사용했을까?
+위치마다 고유 벡터 생성 가능하다.  
+상대 위치 계산 가능하다.  
+학습되지 않아도 일반화 가능하다. 
+{: .prompt-warning }
 
 
 # why self-attention
