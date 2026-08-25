@@ -9,7 +9,7 @@ math: true
 
 
 
-> [!note]+ 공식 링크 / 확인
+> 공식 링크 / 확인
 > - Nature article: [Learning biophysical determinants of cell fate with deep neural networks](https://www.nature.com/articles/s42256-022-00503-6)
 > - DOI: [10.1038/s42256-022-00503-6](https://doi.org/10.1038/s42256-022-00503-6)
 > - bioRxiv preprint: [Learning the Rules of Cell Competition Without Prior Scientific Knowledge](https://www.biorxiv.org/content/10.1101/2021.11.24.469554v1)
@@ -18,23 +18,19 @@ math: true
 > - Software repository: [cellX-predict software](https://doi.org/10.5522/04/19207923)
 > - title/author 확인: Nature 최종 논문의 title과 author가 현재 노트의 title, author와 일치한다.
 > - venue 확인: Nature 공식 페이지 기준 `Nature Machine Intelligence`, volume 4, pages 636-644, accepted 2022-05-13, published 2022-06-30.
+{: .prompt-tip }
 
-> [!success]+ PDF
-
+> PDF
 > [PDF](zotero://select/library/items/4YERMCF7)
+{: .prompt-info }
 
 
 
-> [!info]+ 서지정보
-
+> 서지정보
 > Soelistyo, Christopher J., Giulia Vallardi, Guillaume Charras와/과Alan R. Lowe. “Learning Biophysical Determinants of Cell Fate with Deep Neural Networks”. _Nature Machine Intelligence_ 4, 호 7 (2022): 636–44. [https://doi.org/10.1038/s42256-022-00503-6](https://doi.org/10.1038/s42256-022-00503-6).
+{: .prompt-tip }
 
   
-
-> [!abstract]- 초록(Abstract)
-
-> 
-
   
 
 ## 한줄 요약
@@ -210,26 +206,23 @@ PCA의 주된 목적은 **β-VAE latent를 사람이 해석하기 쉬운 방향�
 
 
 
-**① a — 문제 정의**  
-`주변 세포와 함께 살아가는 세포`
-↓
+>**① a — 문제 정의**  
+`주변 세포와 함께 살아가는 세포`  
+↓  
 미래에
 `mitosis / apoptosis`
-중 무엇이 되는가?
-
-**② b — 미래 정보 제거**
+중 무엇이 되는가?  
+>**② b — 미래 정보 제거**
 `과거 interphase 영상`
 → **cutoff**
 → 미래 fate는 모델에게 보여주지 않음
-
-**③ d — 각 frame을 β-VAE로 encoding**
-$Image_t \rightarrow z_t$ 
-
-**④ e — latent를 PCA feature로 변환**
-$z_t \rightarrow [PC0_t,PC1_t,\cdots,PC31_t]$ 
-
-**⑤ c — 시간 sequence를 TCN에 넣음**
+>**③ d — 각 frame을 β-VAE로 encoding**
+$Image_t \rightarrow z_t$   
+>**④ e — latent를 PCA feature로 변환**
+$z_t \rightarrow [PC0_t,PC1_t,\cdots,PC31_t]$   
+> **⑤ c — 시간 sequence를 TCN에 넣음**
 $PC_{t-128:t} \rightarrow TCN \rightarrow Apoptosis/Mitosis/Other$
+{: .prompt-info }
 
 
 
