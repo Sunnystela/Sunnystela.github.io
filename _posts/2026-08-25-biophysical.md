@@ -184,15 +184,8 @@ $z_1,z_2,z_3,\dots$
 
 을 만듭니다.
 
-즉
 
-$z\in R^{32}$
-
-를
-
-$PC0,PC1,\dots,PC31$
-
-로 projection합니다.
+$z\in R^{32}$ 를 $PC0,PC1,\dots,PC31$ 로 projection합니다.
 
 중요한 것은 **차원 수를 줄이려고 PCA를 쓴 것이 핵심이 아니라는 점**입니다.
 
@@ -314,7 +307,7 @@ WT ↔ scribkd 방향으로 바뀝니다.
 
 PC1이 증가할수록 주변에 보이는 nucleus 수가 증가합니다.
 
-즉 세포들이 더 빽빽하게 있습니다.
+세포들이 더 빽빽하게 있습니다.
 관련 있다고 볼 수 있다
 
 논문에서는 local density와 nuclear area가 관련된 정보가 이 component에 반영되어 있다고 설명합니다.
@@ -387,7 +380,7 @@ e 두 번째 줄: PC feature saliency
 
 밝은 부분일수록 해당 시간/PC가 prediction에 중요했다는 의미입니다.
 
-즉 단순히 PC 값이 크다는 뜻과 **saliency가 높다는 것은 다릅니다.**
+단순히 PC 값이 크다는 뜻과 **saliency가 높다는 것은 다릅니다.**
 
 
 e 세 번째 줄: PC value
