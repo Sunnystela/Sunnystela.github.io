@@ -1,6 +1,7 @@
 ---
 ---
 
+@use 'vendors/bootstrap';
 @use 'main';
 
 :root {
@@ -61,6 +62,35 @@ body {
   font-family: var(--portfolio-sans);
   font-size: 1.04rem;
   margin: 0;
+}
+
+/* Keep Chirpy's grid available without relying on the development CDN. */
+#main-wrapper,
+#main-wrapper > .container,
+#main-wrapper > .container > .row,
+main,
+#tail-wrapper,
+.content {
+  min-width: 0;
+}
+
+.content {
+  overflow-wrap: break-word;
+}
+
+.content img,
+.content video,
+.content iframe,
+.content svg {
+  height: auto;
+  max-width: 100%;
+}
+
+.table-wrapper,
+.highlight,
+pre {
+  max-width: 100%;
+  overflow-x: auto;
 }
 
 a:focus-visible,
@@ -397,6 +427,11 @@ button:focus-visible {
   text-decoration: none;
 }
 
+.project-entry a > *,
+.note-row a > * {
+  min-width: 0;
+}
+
 .project-entry time,
 .project-kind,
 .note-row time,
@@ -420,6 +455,7 @@ button:focus-visible {
   letter-spacing: -0.02em;
   line-height: 1.15;
   margin: 0;
+  overflow-wrap: anywhere;
   transition: color 150ms ease, transform 180ms ease;
 }
 
@@ -534,9 +570,23 @@ pre {
   .hero-copy h1 {
     font-size: clamp(3.1rem, 7vw, 4.8rem);
   }
+
+  .project-entry a,
+  .note-row a {
+    gap: 1rem;
+    grid-template-columns: 6.5rem minmax(0, 1fr) 7rem;
+  }
 }
 
 @media (max-width: 767.98px) {
+  .layout-post main,
+  .layout-page main,
+  .layout-post #tail-wrapper,
+  .layout-page #tail-wrapper {
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+  }
+
   .layout-home #main-wrapper,
   .layout-home #main-wrapper > .container,
   .layout-home #main-wrapper > .container > .row,
