@@ -1,0 +1,34 @@
+<!-- The paginator for the post list on the home page. -->
+
+{% if include.anchor %}
+  {% capture page_anchor %}#{{ include.anchor }}{% endcapture %}
+{% else %}
+  {% assign page_anchor = '' %}
+{% endif %}
+
+<nav class="notes-pagination" data-notes-pagination aria-label="Research notes pagination">
+  {% if paginator.previous_page %}
+    {% assign prev_url = paginator.previous_page_path | relative_url | append: page_anchor %}
+    <button class="notes-page-link is-newer" data-notes-page-link data-page-url="{{ prev_url }}" type="button">Newer notes</button>
+  {% else %}
+    <span class="notes-page-link is-disabled" aria-hidden="true">Newer notes</span>
+  {% endif %}
+
+  <span class="notes-page-count" aria-current="page" aria-label="Page {{ paginator.page }} of {{ paginator.total_pages }}">
+    {% if paginator.page < 10 %}0{% endif %}{{ paginator.page }}
+    <span aria-hidden="true">/</span>
+    {% if paginator.total_pages < 10 %}0{% endif %}{{ paginator.total_pages }}
+  </span>
+
+  {% if paginator.next_page_path %}
+    {% assign next_url = paginator.next_page_path | relative_url | append: page_anchor %}
+    <button class="notes-page-link is-older" data-notes-page-link data-page-url="{{ next_url }}" type="button">Older notes</button>
+  {% else %}
+    <span class="notes-page-link is-disabled" aria-hidden="true">Older notes</span>
+  {% endif %}
+
+  <noscript>
+    {% if paginator.previous_page %}<a href="{{ prev_url }}">Newer notes</a>{% endif %}
+    {% if paginator.next_page_path %}<a href="{{ next_url }}">Older notes</a>{% endif %}
+  </noscript>
+</nav>

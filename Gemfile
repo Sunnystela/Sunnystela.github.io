@@ -13,7 +13,10 @@ gem "jekyll-paginate", "~> 1.1"
 gem "jekyll-archives", "~> 2.2"
 
 
+gem "tzinfo", "~> 2.0"
+gem "tzinfo-data"
 
 group :test do
   gem "html-proofer", "~> 5.0"
 end
+

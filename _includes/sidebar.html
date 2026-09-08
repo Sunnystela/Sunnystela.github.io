@@ -1,0 +1,48 @@
+<!-- Site rail -->
+<aside aria-label="Sidebar" id="sidebar" class="d-flex flex-column">
+  <header class="profile-wrapper">
+    <a href="{{ '/' | relative_url }}" id="avatar" aria-label="{{ site.title }} home">
+      {%- if site.avatar != empty and site.avatar -%}
+        {%- capture avatar_url -%}
+          {% include media-url.html src=site.avatar %}
+        {%- endcapture -%}
+        <img src="{{- avatar_url -}}" width="56" height="56" alt="" onerror="this.style.display='none'">
+      {%- endif -%}
+    </a>
+
+    <div class="profile-copy">
+      <a class="site-title d-block" href="{{ '/' | relative_url }}">Minseo Kim</a>
+      <p class="site-subtitle mb-0">Computer vision<br>research notes</p>
+    </div>
+  </header>
+
+  <nav class="flex-column flex-grow-1 w-100 ps-0" aria-label="Primary navigation">
+    <ul class="nav">
+      <li class="nav-item{% if page.layout == 'home' %} active{% endif %}">
+        <a href="{{ '/' | relative_url }}" class="nav-link">
+          <span>{{ site.data.locales[include.lang].tabs.home | default: 'Home' | capitalize }}</span>
+        </a>
+      </li>
+
+      {% for tab in site.tabs %}
+        <li class="nav-item{% if tab.url == page.url %} active{% endif %}">
+          <a href="{{ tab.url | relative_url }}" class="nav-link">
+            {% capture tab_name %}{{ tab.url | split: '/' }}{% endcapture %}
+            <span>{{ site.data.locales[include.lang].tabs.[tab_name] | default: tab.title | capitalize }}</span>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </nav>
+
+  <div class="sidebar-bottom d-flex flex-wrap align-items-center w-100">
+    <a class="rail-contact" href="https://github.com/{{ site.github.username }}" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a class="rail-contact" href="mailto:{{ site.social.email }}">Email</a>
+
+    {% unless site.theme_mode %}
+      <button type="button" class="btn btn-link nav-link" aria-label="Switch color mode" id="mode-toggle">
+        <i class="fas fa-adjust" aria-hidden="true"></i>
+      </button>
+    {% endunless %}
+  </div>
+</aside>

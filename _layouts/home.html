@@ -1,0 +1,104 @@
+---
+layout: default
+refactor: true
+---
+
+{% include lang.html %}
+
+{% assign all_pinned = site.posts | where: 'pin', 'true' %}
+{% assign all_normal = site.posts | where_exp: 'item', 'item.pin != true and item.hidden != true' %}
+{% assign posts = '' | split: '' %}
+{% assign visible_start = paginator.page | minus: 1 | times: paginator.per_page %}
+{% assign visible_end = visible_start | plus: paginator.per_page %}
+
+{% if all_pinned.size > visible_start %}
+  {% if all_pinned.size > visible_end %}
+    {% assign pinned_size = paginator.per_page %}
+  {% else %}
+    {% assign pinned_size = all_pinned.size | minus: visible_start %}
+  {% endif %}
+
+  {% for i in (visible_start..all_pinned.size) limit: pinned_size %}
+    {% assign posts = posts | push: all_pinned[i] %}
+  {% endfor %}
+{% else %}
+  {% assign pinned_size = 0 %}
+{% endif %}
+
+{% assign normal_size = paginator.posts | size | minus: pinned_size %}
+{% if normal_size > 0 %}
+  {% if pinned_size > 0 %}
+    {% assign normal_start = 0 %}
+  {% else %}
+    {% assign normal_start = visible_start | minus: all_pinned.size %}
+  {% endif %}
+
+  {% assign normal_end = normal_start | plus: normal_size | minus: 1 %}
+  {% for i in (normal_start..normal_end) %}
+    {% assign posts = posts | push: all_normal[i] %}
+  {% endfor %}
+{% endif %}
+
+<div class="research-home">
+  <section class="portfolio-hero" aria-labelledby="portfolio-title">
+    <div class="hero-copy">
+      <p class="hero-identity">Minseo Kim · Computer Science at Kyung Hee University</p>
+      <h1 id="portfolio-title">Giving machines the gift of sight and questioning what they see.</h1>
+    </div>
+
+    <div class="hero-context">
+      <p class="hero-intro">I am driven by a fundamental curiosity to ask “why,” and I possess the persistent passion and diligence required for continuous exploration.</p>
+      <div class="hero-links">
+        <a href="#research-notes">Browse research notes</a>
+        <a href="{{ '/about/' | relative_url }}">Profile and experience</a>
+      </div>
+    </div>
+  </section>
+
+  {% assign project_posts = site.posts | where_exp: 'item', 'item.categories contains "project"' %}
+  {% if project_posts.size > 0 %}
+    <section class="selected-work" aria-labelledby="selected-work-title">
+      <header class="section-heading">
+        <h2 id="selected-work-title">Selected work</h2>
+        <p>Applied studies where models meet people, images, sound, and physical constraints.</p>
+      </header>
+
+      <div class="project-index">
+        {% for project in project_posts limit: 3 %}
+          <article class="project-entry">
+            <a href="{{ project.url | relative_url }}">
+              <time datetime="{{ project.date | date_to_xmlschema }}">{{ project.date | date: '%d %b %Y' }}</time>
+              <h3>{{ project.title }}</h3>
+              <span class="project-kind">{% if project.categories contains 'CV' %}Computer vision{% else %}Applied research{% endif %}</span>
+            </a>
+          </article>
+        {% endfor %}
+      </div>
+    </section>
+  {% endif %}
+
+  <section class="notes-section" id="research-notes" aria-labelledby="research-notes-title">
+    <header class="section-heading notes-heading">
+      <h2 id="research-notes-title">Research notes</h2>
+      <p>Paper readings, course notes, prototypes, and technical observations—kept close to the work.</p>
+    </header>
+
+    <div id="post-list" class="notes-index">
+      {% for post in posts %}
+        <article class="note-row{% if post.pin %} is-pinned{% endif %}">
+          <a href="{{ post.url | relative_url }}">
+            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%d %b %Y' }}</time>
+            <h3>{{ post.title }}</h3>
+            <span class="note-topic">{{ post.categories | last | default: 'Notebook' }}</span>
+          </a>
+        </article>
+      {% endfor %}
+    </div>
+
+    {% if paginator.total_pages > 1 %}
+      {% include post-paginator.html anchor='research-notes' %}
+    {% endif %}
+  </section>
+</div>
+
+<script src="{{ '/assets/js/home-pagination.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
