@@ -505,6 +505,38 @@ button:focus-visible {
   padding: 0 1.5rem;
 }
 
+/* Keep every non-home interaction in the same blue signal system. */
+body:not(.layout-home) {
+  --bs-link-hover-color: var(--portfolio-signal);
+  --toc-highlight: var(--portfolio-signal);
+  --categories-icon-hover-color: var(--portfolio-signal);
+  --btn-share-hover-color: var(--portfolio-signal);
+}
+
+body:not(.layout-home) a:hover,
+body:not(.layout-home) a:focus-visible {
+  border-bottom-color: var(--portfolio-signal);
+  color: var(--portfolio-signal) !important;
+  text-decoration-color: var(--portfolio-signal);
+}
+
+body:not(.layout-home) a:hover i,
+body:not(.layout-home) button:hover i {
+  color: var(--portfolio-signal) !important;
+}
+
+/* Square corners keep the category rules visible from edge to edge. */
+.layout-categories .categories.card,
+.layout-categories .categories .card-header,
+.layout-categories .categories .list-group {
+  border-radius: 0 !important;
+}
+
+.layout-categories .categories.card {
+  border-color: var(--portfolio-rule);
+  overflow: hidden;
+}
+
 /* Carry the editorial hierarchy into posts and archive pages. */
 .layout-post h1,
 .layout-page main > article > h1,
