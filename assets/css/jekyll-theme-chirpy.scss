@@ -563,6 +563,19 @@ body:not(.layout-home) button:hover i {
   max-width: 76ch;
 }
 
+/* Let prompt copy use the same available width as its callout box. */
+.content blockquote[class^='prompt-'] p,
+.content blockquote[class^='prompt-'] li {
+  max-width: none;
+}
+
+/* Chirpy's default content-link hover is orange; keep it on the blue signal. */
+.layout-post .content a:not(.img-link):hover,
+.layout-post .content a:not(.img-link):focus-visible {
+  border-bottom-color: var(--portfolio-signal);
+  color: var(--portfolio-signal) !important;
+}
+
 .content img,
 .post-tail-wrapper,
 .highlight,
