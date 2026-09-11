@@ -538,6 +538,12 @@ body:not(.layout-home) button:hover i {
 }
 
 /* Carry the editorial hierarchy into posts and archive pages. */
+.layout-post main > article {
+  margin-inline: auto;
+  max-width: 54rem;
+  width: 100%;
+}
+
 .layout-post h1,
 .layout-page main > article > h1,
 .layout-page main > h1 {
