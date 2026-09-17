@@ -59,11 +59,11 @@ RAG는 BART 같은 parametric seq2seq generator에 DPR 기반 Wikipedia vector i
 ![Pasted image 20260902225444](/assets/img/pasted-image-20260902225444.png)
 
 
-RAG는 먼저 사용자의 입력 질문 x를 Query Encoder에 넣어 질문의 의미를 나타내는 벡터 q(x)로 변환한다. 한편 문서들은 미리 각각 임베딩 d(z)로 변환되어 Document Index에 저장되어 있다. 이후 Retriever는 질문 벡터 q(x)와 문서 벡터 d(z)의 유사도를 비교하며, MIPS(Maximum Inner Product Search)를 사용해 질문과 가장 관련성이 높은 Top-k 문서 z1, z2, ...를 찾는다. 이때 Retriever p_eta는 각 문서가 현재 질문과 얼마나 관련 있는지를 $p_eta(z|x)$라는 점수 또는 확률로 나타낸다.
+RAG는 먼저 사용자의 입력 질문 x를 Query Encoder에 넣어 질문의 의미를 나타내는 벡터 q(x)로 변환한다. 한편 문서들은 미리 각각 임베딩 d(z)로 변환되어 Document Index에 저장되어 있다. 이후 Retriever는 질문 벡터 q(x)와 문서 벡터 d(z)의 유사도를 비교하며, MIPS(Maximum Inner Product Search)를 사용해 질문과 가장 관련성이 높은 Top-k 문서 z1, z2, ...를 찾는다. 이때 Retriever p_eta는 각 문서가 현재 질문과 얼마나 관련 있는지를 $p_\eta(z \mid x)$라는 점수 또는 확률로 나타낸다.
 
-검색된 문서들은 질문 x와 함께 Generator p_theta에 전달된다. Generator는 각 검색 문서 z를 참고하여 $p_theta(y|x,z)$, 즉 이 질문과 문서를 바탕으로 특정 답변 y를 생성할 가능성을 계산한다. 이후 Marginalization 단계에서는 Retriever의 문서 관련도와 Generator의 답변 생성 가능성을 함께 고려한다.
+검색된 문서들은 질문 x와 함께 Generator p_theta에 전달된다. Generator는 각 검색 문서 z를 참고하여 $p_\theta(y \mid x,z)$, 즉 이 질문과 문서를 바탕으로 특정 답변 y를 생성할 가능성을 계산한다. 이후 Marginalization 단계에서는 Retriever의 문서 관련도와 Generator의 답변 생성 가능성을 함께 고려한다.
 
-최종적으로 $$p(y|x) = sum_z p_eta(z|x) × p_theta(y|x,z)$$ 형태로 여러 검색 문서의 결과를 종합하여 가장 적절한 답변 y를 생성한다.
+최종적으로 $p(y \mid x)=\sum_z p_\eta(z \mid x)\times p_\theta(y \mid x,z)$ 형태로 여러 검색 문서의 결과를 종합하여 가장 적절한 답변 y를 생성한다.
 
 입력 질문 x → 질문 임베딩 q(x) → 관련 문서 검색 → Top-k 문서 선택 및 관련도 계산 → 질문과 검색 문서를 Generator에 입력 → 문서별 생성 결과 종합 → 최종 답변 y 생성 순서이다.
 
