@@ -63,7 +63,7 @@ RAG는 먼저 사용자의 입력 질문 x를 Query Encoder에 넣어 질문의 
 
 검색된 문서들은 질문 x와 함께 Generator p_theta에 전달된다. Generator는 각 검색 문서 z를 참고하여 $p_theta(y|x,z)$, 즉 이 질문과 문서를 바탕으로 특정 답변 y를 생성할 가능성을 계산한다. 이후 Marginalization 단계에서는 Retriever의 문서 관련도와 Generator의 답변 생성 가능성을 함께 고려한다.
 
-최종적으로 $p(y|x) = sum_z p_eta(z|x) × p_theta(y|x,z)$ 형태로 여러 검색 문서의 결과를 종합하여 가장 적절한 답변 y를 생성한다.
+최종적으로 $$p(y|x) = sum_z p_eta(z|x) × p_theta(y|x,z)$$ 형태로 여러 검색 문서의 결과를 종합하여 가장 적절한 답변 y를 생성한다.
 
 입력 질문 x → 질문 임베딩 q(x) → 관련 문서 검색 → Top-k 문서 선택 및 관련도 계산 → 질문과 검색 문서를 Generator에 입력 → 문서별 생성 결과 종합 → 최종 답변 y 생성 순서이다.
 
