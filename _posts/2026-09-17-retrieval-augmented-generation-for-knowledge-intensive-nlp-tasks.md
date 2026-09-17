@@ -9,7 +9,7 @@ tags:
   - literature
 source: http://arxiv.org/abs/2005.11401
 accept: NeurIPS 2020 (Advances in Neural Information Processing Systems 33); arXiv:2005.11401v4 last revised 2021-04-12
-date: 2026-09-17 17:15:08 +0200
+date: 2026-09-17 17:23:16 +0200
 ---
 
 
@@ -23,7 +23,7 @@ date: 2026-09-17 17:15:08 +0200
 > - venue 확인: NeurIPS proceedings는 `Advances in Neural Information Processing Systems 33 (NeurIPS 2020)`로 등재하고, arXiv comments도 `Accepted at NeurIPS 2020`로 표기한다.
 {: .prompt-info }
 
-### 관련 프로젝트 : [C. AI Agent, RAG](/posts/c-ai-agent-rag/)
+### 관련 프로젝트 : C. AI Agent, RAG
 
 > **PDF**
 >
@@ -55,7 +55,7 @@ RAG는 BART 같은 parametric seq2seq generator에 DPR 기반 Wikipedia vector i
 
 ## 하이라이트 & 내 메모
 
-![Pasted image 20260902225444](/assets/img/Pasted%20image%2020260902225444.png)
+![Pasted image 20260902225444](/assets/img/pasted-image-20260902225444.png)
 
 
 RAG는 먼저 사용자의 입력 질문 x를 Query Encoder에 넣어 질문의 의미를 나타내는 벡터 q(x)로 변환한다. 한편 문서들은 미리 각각 임베딩 d(z)로 변환되어 Document Index에 저장되어 있다. 이후 Retriever는 질문 벡터 q(x)와 문서 벡터 d(z)의 유사도를 비교하며, MIPS(Maximum Inner Product Search)를 사용해 질문과 가장 관련성이 높은 Top-k 문서 z1, z2, ...를 찾는다. 이때 Retriever p_eta는 각 문서가 현재 질문과 얼마나 관련 있는지를 p_eta(z|x)라는 점수 또는 확률로 나타낸다.
@@ -94,7 +94,7 @@ RAG는 먼저 사용자의 입력 질문 x를 Query Encoder에 넣어 질문의 
 
 ## 내 생각 / 질문 / 반박
 
-[C. AI Agent, RAG](/posts/c-ai-agent-rag/) 프로젝트 관점에서 이 논문은 "논문을 왜 query와 매칭해 저장하는가"에 대한 가장 기본적인 답을 준다. RAG는 모든 논문을 모델에 외우게 하는 것이 아니라, 질문이 들어왔을 때 관련 passage를 찾아 generator가 그 passage를 조건으로 답하게 만드는 구조다.
+C. AI Agent, RAG 프로젝트 관점에서 이 논문은 "논문을 왜 query와 매칭해 저장하는가"에 대한 가장 기본적인 답을 준다. RAG는 모든 논문을 모델에 외우게 하는 것이 아니라, 질문이 들어왔을 때 관련 passage를 찾아 generator가 그 passage를 조건으로 답하게 만드는 구조다.
 
 다만 지금 만들려는 paper agent는 원 논문보다 더 까다롭다. Wikipedia open-domain QA에서는 retrieved passage가 대체로 짧은 factual evidence지만, 논문 QA에서는 method, table, figure caption, experimental condition, limitation이 모두 evidence가 될 수 있다. 따라서 단순 100-word chunk와 dense retrieval만으로는 CardioTox 논문 질문을 충분히 처리하기 어렵다.
 
@@ -150,6 +150,7 @@ Figure 흐름은 다음과 같다.
 
 ## 숨겨진 가정이 뭔가?
 
+>예를 들어 Rolling Forcing이면 "GPU 메모리가 충분하다", "입력 프레임이 고정 해상도다" 같은, 논문이 당연하게 깔고 가는 전제들
 
 - Wikipedia index 안에 benchmark 질문의 정답 근거가 충분히 들어 있다는 가정.
 - 100-word chunk가 QA/generation에 필요한 evidence 단위로 충분하다는 가정.
@@ -160,6 +161,7 @@ Figure 흐름은 다음과 같다.
 
 ## 실험 설정
 
+>데이터셋, 비교대상(baseline), 평가지표
 
 - baseline이 공정한가?
 
@@ -187,7 +189,7 @@ Broader Impact에서 저자들은 external knowledge source가 완전히 사실�
 
 RAG의 provenance는 document-level posterior에 가깝고, claim-level evidence verification은 아니다. 논문 agent에서는 한 답변 안의 각 문장마다 근거 passage가 다를 수 있으므로, RAG 원 구조만으로는 citation correctness를 보장하기 어렵다.
 
-또한 Wikipedia 100-word chunk는 비교적 단순한 factual QA에는 맞지만, 논문 PDF의 table, figure, method condition, endpoint definition은 chunk boundary가 틀어지면 의미가 쉽게 깨진다. [C. AI Agent, RAG](/posts/c-ai-agent-rag/) 프로젝트에서는 chunking이 retriever보다 먼저 망가질 수 있다.
+또한 Wikipedia 100-word chunk는 비교적 단순한 factual QA에는 맞지만, 논문 PDF의 table, figure, method condition, endpoint definition은 chunk boundary가 틀어지면 의미가 쉽게 깨진다. C. AI Agent, RAG 프로젝트에서는 chunking이 retriever보다 먼저 망가질 수 있다.
 
 ## 이 방법이 실패하는 경우를 상상할 수 있나?
 

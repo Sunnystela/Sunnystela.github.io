@@ -24,12 +24,16 @@ Features
    [[My Note|label]] -> [label](/posts/my-note/)
    [[#Heading]] -> [Heading](#heading)
 
-4. Obsidian-style hard line breaks
+4. Jekyll-aware wikilinks
+   Existing target posts become links; missing targets become plain text,
+   so HTML-Proofer does not fail on invented /posts/... URLs.
+
+5. Obsidian-style hard line breaks
    Plain Enter-separated prose is rewritten with two trailing spaces so
    Chirpy/Jekyll renders the line breaks. Code fences, math blocks, tables,
    headings, lists, HTML blocks, and prompt attribute lines are excluded.
 
-5. Existing YAML front matter is preserved.
+6. Existing YAML front matter is preserved.
    Missing title/date are added, and math:true / mermaid:true are inferred.
 
 Usage
@@ -289,6 +293,18 @@ def unique_destination(directory: Path, filename: str, source: Path) -> Path:
         n += 1
 
 
+
+def safe_asset_filename(source: Path) -> str:
+    """
+    Make URLs clean and stable.
+    Example:
+      Pasted image 20260902225444.png
+      -> pasted-image-20260902225444.png
+    """
+    stem = slugify(source.stem)
+    suffix = source.suffix.lower()
+    return f"{stem}{suffix}"
+
 def transform_images(
     body: str,
     vault: Path,
@@ -318,7 +334,7 @@ def transform_images(
             return match.group(0)
 
         dest_dir = jekyll / image_dest_rel
-        dest = unique_destination(dest_dir, source.name, source)
+        dest = unique_destination(dest_dir, safe_asset_filename(source), source)
 
         if not dry_run:
             dest_dir.mkdir(parents=True, exist_ok=True)
@@ -349,11 +365,101 @@ def heading_anchor(text: str) -> str:
     return text
 
 
-def transform_wikilinks(body: str) -> str:
+def _post_keys(file: Path, front: str):
     """
-    Converts common Obsidian wikilinks to Chirpy's default /posts/:title/ URLs.
+    Return names by which an Obsidian wikilink may refer to a Jekyll post.
+    """
+    stem = file.stem
+    stem_without_date = re.sub(r"^\d{4}-\d{2}-\d{2}-", "", stem)
+    title = yaml_value(front, "title")
+    explicit_slug = yaml_value(front, "slug")
+
+    candidates = {
+        stem,
+        stem_without_date,
+        slugify(stem_without_date),
+    }
+
+    if title:
+        candidates.add(title)
+        candidates.add(slugify(title))
+
+    if explicit_slug:
+        candidates.add(explicit_slug)
+        candidates.add(slugify(explicit_slug))
+
+    return {c.strip().lower() for c in candidates if c and c.strip()}
+
+
+def build_post_index(jekyll: Path):
+    """
+    Build a lookup of existing Jekyll posts.
+
+    This prevents Obsidian [[wikilinks]] from becoming links to pages that
+    do not actually exist, which otherwise makes htmlproofer fail.
+    """
+    index = {}
+    posts_dir = jekyll / "_posts"
+    if not posts_dir.is_dir():
+        return index
+
+    files = list(posts_dir.rglob("*.md")) + list(posts_dir.rglob("*.markdown"))
+    for file in files:
+        try:
+            raw = file.read_text(encoding="utf-8-sig")
+        except UnicodeDecodeError:
+            continue
+
+        front, _ = split_front_matter(raw)
+        stem_without_date = re.sub(r"^\d{4}-\d{2}-\d{2}-", "", file.stem)
+
+        # Chirpy's normal post URL is /posts/:title/.
+        explicit_permalink = yaml_value(front, "permalink")
+        explicit_slug = yaml_value(front, "slug")
+        url_slug = explicit_slug or stem_without_date
+
+        if explicit_permalink:
+            url = explicit_permalink
+            if not url.startswith("/"):
+                url = "/" + url
+            if not url.endswith("/") and "." not in Path(url).name:
+                url += "/"
+        else:
+            url = f"/posts/{slugify(url_slug)}/"
+
+        for key in _post_keys(file, front):
+            index[key] = url
+
+    return index
+
+
+def transform_wikilinks(body: str, jekyll: Path) -> str:
+    """
+    Convert Obsidian wikilinks only when the linked Jekyll post already exists.
+
+    Existing post:
+      [[My Note]] -> [My Note](/posts/my-note/)
+
+    Missing post:
+      [[My Future Note]] -> My Future Note
+
+    This intentionally avoids emitting a broken internal URL that would fail
+    HTML-Proofer.
     """
     pattern = re.compile(r"(?<!!)\[\[([^\]]+)\]\]")
+    post_index = build_post_index(jekyll)
+
+    def resolve_note(note: str):
+        raw = note.strip()
+        keys = [
+            raw.lower(),
+            re.sub(r"\.(md|markdown)$", "", raw, flags=re.I).lower(),
+            slugify(raw).lower(),
+        ]
+        for key in keys:
+            if key in post_index:
+                return post_index[key]
+        return None
 
     def replace(match: re.Match) -> str:
         raw = match.group(1).strip()
@@ -366,6 +472,7 @@ def transform_wikilinks(body: str) -> str:
             target = raw
             label = ""
 
+        # Same-page heading link.
         if target.startswith("#"):
             heading = target[1:].strip()
             return f"[{label or heading}](#{heading_anchor(heading)})"
@@ -375,10 +482,30 @@ def transform_wikilinks(body: str) -> str:
             note = note.strip()
             heading = heading.strip()
             text = label or heading or note
-            return f"[{text}](/posts/{slugify(note)}/#{heading_anchor(heading)})"
+            base = resolve_note(note)
+            if base:
+                return f"[{text}]({base}#{heading_anchor(heading)})"
+
+            print(
+                f"[warning] Jekyll post not found for wikilink: [[{raw}]]. "
+                f"Leaving it as plain text.",
+                file=sys.stderr,
+            )
+            return text
 
         note = target.strip()
-        return f"[{label or note}](/posts/{slugify(note)}/)"
+        text = label or re.sub(r"\.(md|markdown)$", "", note, flags=re.I)
+        base = resolve_note(note)
+
+        if base:
+            return f"[{text}]({base})"
+
+        print(
+            f"[warning] Jekyll post not found for wikilink: [[{raw}]]. "
+            f"Leaving it as plain text.",
+            file=sys.stderr,
+        )
+        return text
 
     return pattern.sub(replace, body)
 
@@ -547,7 +674,7 @@ def build_output(
 
     body = transform_callouts(body)
     body = transform_images(body, vault, jekyll, image_dest_rel, dry_run=dry_run)
-    body = transform_wikilinks(body)
+    body = transform_wikilinks(body, jekyll)
 
     if hard_breaks:
         body = add_obsidian_hard_breaks(body)
@@ -572,8 +699,8 @@ def main():
     parser.add_argument(
         "--image-dest",
         type=Path,
-        default=Path("assets/img/posts"),
-        help="Image destination relative to Jekyll repo (default: assets/img/posts)",
+        default=Path("assets/img"),
+        help="Image destination relative to Jekyll repo (default: assets/img)",
     )
     parser.add_argument(
         "--no-hard-breaks",
