@@ -42,19 +42,6 @@ math: true
 
 > We present Hakken, a domain-agnostic prediction and explanation system performing knowledge prediction, i.e., growing scientific knowledge by establishing novel relationships, ones that are not limited to the deductive hull of previous knowledge. Hakken uses a transformer-based prediction model built on temporal sequences of knowledge graphs extracted from vast bodies of research publications, fused with an LLM's semantic knowledge, to predict the presence and define the type of as-yet undocumented relationships between scientific concepts. It then calls a model-agnostic explanation framework to provide accompanying information for each prediction that allows scientists to evaluate the suggested new relationship. While general purpose, we demonstrate Hakken's practical capabilities by applying it to the biomedical domain. There, Hakken's prediction model establishes a new benchmark for time-aware multi-label relation prediction, and we show that the model's output stays coherent and informative over extended time spans in historic data. In addition, we scored 1.5 million above-confidence-threshold hypotheses related to aging, qualitatively validated batches of these predictions with biologists and progressed three of them for empirical validation in wet-lab. Two predictions with potentially significant impact in the context of drug discovery and repurposing were confirmed, introducing previously undocumented interactions between TP53 and BAMBI, and between RAF1 and TNF, to biomedical science.
 
-  
-### TODO
-Hakken: Predicting future discoveries to fill the gaps in today's knowledge  
-이 논문은 어느 프로젝트와 연결되는 것인지
-
->agent rag 하는거  
->발표 준비하면 좋겠다  
->어떻게 prediction  
->데이터베이스 구축 방법  
->벤치마크 할 수 있을 부분  
->opensource가져왔다  
->그런 디테일 점검   
->확장, 적용
 
 
 
