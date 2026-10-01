@@ -1,6 +1,6 @@
 ---
 type: post
-title: "Hakken: Predicting future discoveries to fill the gaps in today's knowledge"
+title: "[논문정리] Hakken: Predicting future discoveries to fill the gaps in today's knowledge"
 date:   2026-10-01 10:17
 categories: AI LLM
 tag: LLM
