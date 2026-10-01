@@ -44,6 +44,17 @@ math: true
 
   
 ### TODO
+Hakken: Predicting future discoveries to fill the gaps in today's knowledge  
+이 논문은 어느 프로젝트와 연결되는 것인지
+
+>agent rag 하는거  
+>발표 준비하면 좋겠다  
+>어떻게 prediction  
+>데이터베이스 구축 방법  
+>벤치마크 할 수 있을 부분  
+>opensource가져왔다  
+>그런 디테일 점검   
+>확장, 적용
 
 
 
