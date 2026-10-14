@@ -1,6 +1,6 @@
 ---
 type: literature
-title: "BRIGHT: A Realistic and Challenging Benchmark for Reasoning-Intensive Retrieval"
+title: "[논문정리] BRIGHT: A Realistic and Challenging Benchmark for Reasoning-Intensive Retrieval"
 author: "Hongjin Su, Howard Yen, Mengzhou Xia, Weijia Shi, Niklas Muennighoff, Han-yu Wang, Haisu Liu, Quan Shi, Zachary S. Siegel, Michael Tang, Ruoxi Sun, Jinsung Yoon, Sercan O. Arik, Danqi Chen, Tao Yu"
 year: "2025"
 citekey: "suBRIGHTRealisticChallenging2025"
