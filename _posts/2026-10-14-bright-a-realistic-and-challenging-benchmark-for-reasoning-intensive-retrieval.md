@@ -1,6 +1,6 @@
 ---
 type: literature
-title: "BRIGHT: A Realistic and Challenging Benchmark for Reasoning-Intensive Retrieval"
+title: "[논문정리] BRIGHT: A Realistic and Challenging Benchmark for Reasoning-Intensive Retrieval"
 author: "Hongjin Su, Howard Yen, Mengzhou Xia, Weijia Shi, Niklas Muennighoff, Han-yu Wang, Haisu Liu, Quan Shi, Zachary S. Siegel, Michael Tang, Ruoxi Sun, Jinsung Yoon, Sercan O. Arik, Danqi Chen, Tao Yu"
 year: "2025"
 citekey: "suBRIGHTRealisticChallenging2025"
@@ -172,7 +172,6 @@ query가 문서와 얼마나 비슷한지를 평가하는 것이 아닌 query를
 ## 실험 설정
 
 
-- baseline이 공정한가?
 
 - Dataset: StackExchange 7개 도메인(Biology, Earth Science, Economics, Psychology, Robotics, Stack Overflow, Sustainable Living), Coding(LeetCode, Pony), Theorem/math(AoPS, TheoremQA-Q, TheoremQA-T)로 구성된 12개 retrieval dataset.
 - Input variants: original query와 LLM reasoning steps를 query로 사용하는 변형을 비교한다.
