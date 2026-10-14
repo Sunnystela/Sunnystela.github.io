@@ -1,15 +1,10 @@
 ---
-type: literature
+type: post
 title: "[논문정리] LiveEdit: Towards Real-Time Diffusion-Based Streaming Video Editing"
-author: "Xinyu Wang, Chongbo Zhao, Fangneng Zhan, Yue Ma"
-year: "2026"
-citekey: "wangLiveEditRealTimeDiffusionBased2026"
-status: unread
-tags:
-  - literature
-source: "http://arxiv.org/abs/2606.26740"
-accept: "ECCV 2026 (European Conference on Computer Vision); Springer LNCS vol. 17021, pp. 631-649; first online 2026-09-13; arXiv:2606.26740"
-date: 2026-10-14 16:03:49 +0200
+tags: AI CV
+date: 2026-10-14 16:03
+math: true
+categories: AI CV
 ---
 
 
