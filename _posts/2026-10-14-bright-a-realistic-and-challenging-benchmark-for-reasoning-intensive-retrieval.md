@@ -1,6 +1,6 @@
 ---
 type: literature
-title: "[논문정리] BRIGHT: A Realistic and Challenging Benchmark for Reasoning-Intensive Retrieval"
+title: "BRIGHT: A Realistic and Challenging Benchmark for Reasoning-Intensive Retrieval"
 author: "Hongjin Su, Howard Yen, Mengzhou Xia, Weijia Shi, Niklas Muennighoff, Han-yu Wang, Haisu Liu, Quan Shi, Zachary S. Siegel, Michael Tang, Ruoxi Sun, Jinsung Yoon, Sercan O. Arik, Danqi Chen, Tao Yu"
 year: "2025"
 citekey: "suBRIGHTRealisticChallenging2025"
@@ -9,7 +9,7 @@ tags:
   - literature
 source: "http://arxiv.org/abs/2407.12883"
 accept: "ICLR 2025 (13th International Conference on Learning Representations); published as a conference paper"
-date: 2026-10-07 13:16:37 +0200
+date: 2026-10-14 13:16:37 +0200
 ---
 
 
@@ -174,6 +174,8 @@ query가 문서와 얼마나 비슷한지를 평가하는 것이 아닌 query를
 ## 실험 설정
 
 
+- baseline이 공정한가?
+
 - Dataset: StackExchange 7개 도메인(Biology, Earth Science, Economics, Psychology, Robotics, Stack Overflow, Sustainable Living), Coding(LeetCode, Pony), Theorem/math(AoPS, TheoremQA-Q, TheoremQA-T)로 구성된 12개 retrieval dataset.
 - Input variants: original query와 LLM reasoning steps를 query로 사용하는 변형을 비교한다.
 - Baseline: sparse retrieval(BM25), dense embedding retriever, instruction-tuned retriever, larger embedding model, reranker/LLM reranking 등을 비교한다.
@@ -211,6 +213,36 @@ query가 문서와 얼마나 비슷한지를 평가하는 것이 아닌 query를
 - LLM-generated reasoning step이 plausible하지만 틀린 bridge를 만들면 retriever가 confident하게 엉뚱한 문서를 찾을 수 있다.
 
 
+> **내 연구 연결**
+>
+{: .prompt-info }
+
+## 현재 진행중인 연구와 연결될만한 점
+
+- C. AI Agent, RAG: 논문 agent의 retrieval benchmark를 만들 때, answer correctness와 retrieval relevance를 분리해야 한다. BRIGHT는 특히 `query -> reasoning trace -> evidence passage`를 gold structure로 잡아야 함을 보여준다.
+- CardioTox/biomedical RAG에 적용하면, query와 evidence가 같은 단어를 공유하지 않아도 assay endpoint, mechanism, perturbation condition, model organism 같은 bridge로 연결될 수 있다. 따라서 chunk similarity만으로 평가하면 중요한 실패를 놓친다.
+- HakkenPredictingFuture2026와 연결하면, AI discovery agent는 단순히 관련 논문을 찾는 것이 아니라 hypothesis를 지지하거나 반박하는 evidence path를 찾아야 한다. BRIGHT는 이 evidence path retrieval을 benchmark화할 수 있는 선행 아이디어다.
+
+
+## 관련될 수 있는 개념/질문 (후보 제안, 질문 형태로)
+
+- 논문 RAG에서 reasoning-intensive query를 어떻게 자동 분류할 것인가?
+- query와 evidence 사이의 hidden bridge를 annotation schema로 만들 수 있는가?
+- retriever 평가에서 `문서가 topic-wise relevant한가`와 `claim을 지지하는가`를 분리해야 하는가?
+- LLM query rewriting은 retrieval model 성능인가, agent planning 성능인가?
+- 전문 분야 RAG benchmark는 positive passage뿐 아니라 hard negative rationale도 가져야 하는가?
+
+
+
+## 연결된 노트
+
+- 관련 프로젝트: C. AI Agent, RAG
+
+- 관련 개념: 전문 RAG 평가는 답변 정확도와 근거 연결성을 분리해야 한다, RAG에서 논문은 학습 데이터가 아니라 검색 가능한 근거 저장소다, 외부 메모리는 지식 갱신성과 provenance를 분리해 준다, 추론형 검색은 query와 evidence 사이의 숨은 연결고리를 평가해야 한다
+
+- 관련 논문: RetrievalAugmentedGenerationKnowledgeIntensive2021, RetrievalAugmentedGenerationLarge2024, HakkenPredictingFuture2026
+
+  
 
 > **마무리**
 >
@@ -225,3 +257,7 @@ BRIGHT는 retrieval benchmark를 표면 matching 문제가 아니라 query와 ev
 
 가장 먼저 무너질 지점은 positive relevance label이다. accepted/high-voted answer 링크와 annotator agreement가 실제 reasoning relevance를 충분히 대표하지 못한다면, BRIGHT의 낮은 retriever score는 reasoning failure가 아니라 label construction artifact일 수 있다.
 
+
+## 다음 액션
+
+- [ ] 영구노트로 승격할 아이디어가 있는지 확인하여 작성
