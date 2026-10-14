@@ -253,39 +253,6 @@ DMD는 적은 생성 단계만 사용하더라도 generator의 출력 분포가 
 - 사용자가 interactive하게 instruction을 바꾸는 경우, 이전 cache를 얼마나 폐기하고 얼마나 재사용할지 결정하기 어렵다.
 
 
-> **내 연구 연결**
->
-{: .prompt-info }
-
-## 현재 진행중인 연구와 연결될만한 점
-
-- END_Personalization와 직접 연결된다. 내 목표가 비디오 AR 생성에서 personalization을 붙이는 것이라면, identity를 넣는 모듈만큼 중요한 것이 **바뀌면 안 되는 영역을 어떻게 보존할지**다.
-- LiveEdit는 reference identity injection 논문은 아니지만, personalized AR editing/generation에서 "보존 영역"을 계산 단위로 다루는 방법을 준다. 이는 identity-preserving video personalization에서 얼굴/의상/배경 token을 어디까지 recompute하고 어디까지 cache할지 결정하는 문제로 확장될 수 있다.
-- 0. 창고의 Text2Video-Zero/streaming generation 관점에서는, full video를 한 번에 생성하는 방식보다 causal chunk-wise generation/editing이 interactive system에 더 적합하다는 근거가 된다.
-- Attention sink는 스트리밍 생성의 장기 drift를 억제한다와 연결된다. LiveEdit GitHub는 long-video inference에서 rolling attention sinks와 window-relative RoPE를 추가했다고 설명한다. 즉, long-horizon drift를 줄이려면 causal chunk model에도 일부 persistent context가 필요하다.
-- AR video의 flicker는 latent acceleration의 고주파 에너지로 진단할 수 있다와도 연결된다. LiveEdit는 실시간 편집을 위해 속도를 높이지만, 이후 내 연구에서는 "빠른 causal editor가 flicker/identity drift를 얼마나 만들거나 줄이는가"를 별도 metric으로 봐야 한다.
-
-
-## 관련될 수 있는 개념/질문 (후보 제안, 질문 형태로)
-
-- personalization에서 identity-critical region은 cache해야 identity drift가 줄어드는가, 아니면 매번 recompute해야 identity detail이 유지되는가?
-- mask cache를 "편집 영역/비편집 영역"이 아니라 "identity-sensitive/background/motion-sensitive"처럼 더 세분화할 수 있는가?
-- LiveEdit의 AR-oriented mask cache를 reference image 기반 personalization adapter와 결합하면, reference identity를 어디에서 주입하고 어디에서 reuse해야 하는가?
-- rolling attention sink와 mask cache는 같은 문제를 다른 축에서 푸는가? 하나는 temporal context 보존, 다른 하나는 spatial region 보존이다.
-- global style edit처럼 전체 frame이 바뀌어야 하는 경우에도 cache를 쓰는 것이 맞는가?
-- cache decision의 confidence를 output uncertainty로 저장하면, 후속 frame에서 artifact persistence를 줄일 수 있는가?
-
-
-
-## 연결된 노트
-
-- 관련 프로젝트: END_Personalization, 0. 창고
-
-- 관련 개념: 보존 영역은 실시간 비디오 편집의 계산 예산을 결정한다, Attention sink는 스트리밍 생성의 장기 drift를 억제한다, AR video의 flicker는 latent acceleration의 고주파 에너지로 진단할 수 있다, reference encoder를 새로 붙이기 전에 base model의 내재 표현을 먼저 확인해야 한다
-
-- 관련 논문: RollingForcingAutoregressive2025a, TemporalRegularizationMakes2025, SAGAStableAcceleration2026, Text2VideoZeroTexttoImageDiffusion2023, VideoBoothDiffusionbasedVideo2024, VideoMakerZeroshotCustomized2024
-
-  
 
 > **마무리**
 >
@@ -300,9 +267,3 @@ LiveEdit는 offline bidirectional video editor의 품질을 causal streaming edi
 
 가장 먼저 무너질 지점은 **mask cache가 보존 영역을 안정적으로 구분하고 재사용해도 품질이 유지된다**는 가정이다. 이 가정이 틀리면 LiveEdit의 속도 이득은 artifact persistence나 identity/background drift를 만드는 원인이 되고, real-time editing이라는 장점이 품질 손실로 상쇄된다.
 
-
-## 다음 액션
-
-- [x] 보존 영역은 실시간 비디오 편집의 계산 예산을 결정한다 permanent로 승격
-- [ ] END_Personalization 프로젝트에 LiveEdit를 "real-time AR editing / preservation-cache baseline"으로 추가
-- [ ] LiveEdit의 mask cache와 attention sink를 연결해, personalization에서 identity-preserving cache 정책 아이디어 정리
