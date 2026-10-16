@@ -14,7 +14,6 @@ math: true
 ---
 
 
-### Home
 ### 관련 프로젝트 : 0. 창고
 
 > **공식 링크 / acceptance 확인**
@@ -258,24 +257,6 @@ foundation model의 feature·decoder 버전에 대한 의존성이 크고, froze
 관측 시점 사이에 공통 영역이 거의 없거나, 반사·투명·동적 물체처럼 단일 정적 3D correspondence가 성립하지 않으면 실패할 수 있다. 또한 geometric encoder가 잘못 추정한 depth를 diffusion이 수정하지 못하고 일관되게 유지할 가능성도 있다.
 
 
-> **내 연구 연결**
->
-{: .prompt-info }
-
-## 현재 진행중인 연구와 연결될만한 점
-현재의 video·cell tracking 문제에도 “prediction 전에 좌표계를 선택한다”는 설계 원리를 적용할 수 있다. 단순 appearance latent에서 trajectory를 예측하기보다, 시간·공간 correspondence를 보존하는 representation에서 미래 상태를 생성하면 tracking과 prediction의 일관성을 같은 latent에서 평가할 수 있다. 다만 세포 영상에서는 geometry foundation model 대신 segmentation·motion·lineage prior를 함께 담은 domain-specific latent가 필요하다.
-
-
-## 관련될 수 있는 개념/질문 (후보 제안, 질문 형태로)
-representation의 구조적 prior가 diffusion sample efficiency를 얼마나 결정하는가? / frozen encoder의 feature를 생성 모델의 latent로 쓸 때 decoder compatibility를 어떻게 정량화할 것인가? / multi-view 대신 time-lapse 영상에서 correspondence-aware latent를 만들면 tracking error와 prediction error를 하나의 consistency metric으로 묶을 수 있는가?
-
-
-## 연결된 노트
-
-- 관련 프로젝트: 0. 창고
-
-- 관련 개념: 기하적으로 정렬된 표현은 생성 모델의 일관성을 학습 전에 제한한다
-
   
 
 > **마무리**
@@ -289,8 +270,3 @@ GLD는 geometric foundation model의 correspondence-aware feature를 diffusion l
 ## 이 논문이 틀렸다면 어디가 가장 먼저 무너질까?
 VAE·RAE 대비 4.4배 빠른 수렴과 3D consistency 우위가 backbone 사전학습·decoder 설계·학습 budget을 통제한 뒤에도 유지되는지에서 먼저 무너질 것이다.
 
-
-## 다음 액션
-
-- [ ] 영구노트로 승격할 아이디어가 있는지 확인하여 작성
-- [x] 기하적으로 정렬된 표현은 생성 모델의 일관성을 학습 전에 제한한다 영구노트로 승격
