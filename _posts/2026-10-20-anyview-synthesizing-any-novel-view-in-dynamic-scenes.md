@@ -219,24 +219,6 @@ implicit representation은 명시적 3D 구조처럼 object identity·occlusion�
 입력 카메라와 목표 카메라 사이에 공통 관측이 거의 없고, 객체가 빠르게 변형되거나 사라지며, 반사·투명·자기 가림이 많은 경우 실패할 수 있다. 카메라 파라미터가 부정확하거나 목표 trajectory가 훈련 분포에서 크게 벗어나면 motion이 시간축에서 흔들리거나 background와 object가 섞일 가능성이 높다.
 
 
-> **내 연구 연결**
->
-{: .prompt-info }
-
-## 현재 진행중인 연구와 연결될만한 점
-세포 영상에서 관측되지 않은 시점 대신 관측되지 않은 미래를 생성한다는 관점으로 연결할 수 있다. AnyView의 핵심처럼 입력 trajectory와 target trajectory를 명시하면, 세포의 현재 morphology·motion 상태를 조건으로 미래 trajectory를 생성하는 문제를 구성할 수 있다. 다만 세포에서는 camera ray보다 cell identity·neighbor interaction·lineage state가 핵심 조건이므로, implicit 4D prior를 biology-aware state representation으로 바꿔야 한다.
-
-
-## 관련될 수 있는 개념/질문 (후보 제안, 질문 형태로)
-시점 변화의 크기와 예측 불확실성을 함께 추정할 수 있는가? / 명시적 geometry 없이 생성된 dynamic scene의 temporal consistency를 어떤 correspondence metric으로 검증할 것인가? / 관측되지 않은 영역의 plausibility와 실제 정답 복원 성능을 어떻게 분리할 것인가? / multi-domain training에서 domain 균형 샘플링이 camera generalization과 motion generalization 중 무엇을 더 개선하는가?
-
-
-## 연결된 노트
-
-- 관련 프로젝트: 0. 창고
-
-- 관련 개념: 카메라 조건은 명시적 3D 대신 생성 모델의 시점 일반화를 조절한다
-
   
 
 > **마무리**
@@ -250,8 +232,3 @@ AnyView는 Plücker camera conditioning과 multi-domain 4D 학습을 이용해, 
 ## 이 논문이 틀렸다면 어디가 가장 먼저 무너질까?
 극단적 viewpoint change에서 AnyView의 개선이 실제 camera conditioning의 효과가 아니라, 더 큰 Cosmos backbone·더 많은 4D 데이터·더 강한 생성 prior의 효과라는 통제 실험에서 먼저 무너질 것이다.
 
-
-## 다음 액션
-
-- [ ] 영구노트로 승격할 아이디어가 있는지 확인하여 작성
-- [x] 카메라 조건은 명시적 3D 대신 생성 모델의 시점 일반화를 조절한다 영구노트로 승격
