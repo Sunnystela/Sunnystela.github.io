@@ -120,7 +120,7 @@ Timestep
 
 **Figure 흐름 메모:** 입력 비디오와 입력 camera trajectory → 각 픽셀의 ray direction·moment를 담은 Plücker embedding 생성 → 입력 view와 target view 조건을 sequence 차원에서 함께 구성 → Cosmos latent diffusion transformer가 target-view video latent를 생성 → latent decoder가 시간 동기화된 RGB 비디오를 출력한다. Figure 1의 비교에서는 depth reprojection·point cloud 또는 기존 trajectory-aware baseline이 큰 시점 이동에서 입력 view를 복사하거나 구조를 잃는 반면, AnyView는 geometry·appearance·dynamic motion을 함께 유지하는지를 보여준다.
   
-![Pasted image 20261020174653](/assets/img/pasted-image-20261020174652.png)
+![Pasted image 20261020174653](/assets/img/pasted-image-20261020174653.png)
 
 AnyView가 기존 학습 방식보다 새로운 카메라 시점을 얼마나 정확하게 생성하는지 비교한 정량 평가 결과
 
