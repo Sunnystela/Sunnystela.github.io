@@ -1,6 +1,6 @@
 ---
 type: literature
-title: "VideoMLA: Low-Rank Latent KV Cache for Minute-Scale Autoregressive Video Diffusion"
+title: "[논문정리] VideoMLA: Low-Rank Latent KV Cache for Minute-Scale Autoregressive Video Diffusion"
 author: "Hidir Yesiltepe, Jiazhen Hu, Tuna Han Salih Meral, Adil Kaan Akan, Kaan Oktay, Hoda Eldardiry, Pinar Yanardag"
 year: "2026"
 citekey: "yesiltepeVideoMLALowRankLatent2026"
