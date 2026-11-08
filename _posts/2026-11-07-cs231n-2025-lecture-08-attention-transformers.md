@@ -102,14 +102,14 @@ $$
 
 [Neural Machine Translation by Jointly Learning to Align and Translate](https://arxiv.org/abs/1409.0473)에서 제시된 방식은 Decoder의 현재 상황을 바탕으로 Encoder hidden state들의 중요도를 계산한다.
 
-Decoder의 $$t$$번째 출력에 대해 이전 Decoder 상태 $$s_{t-1}$$와 각 Encoder 상태 $$h_i$$의 연관성을 평가한다.
+Decoder의 $t$번째 출력에 대해 이전 Decoder 상태 $s_{t-1}$와 각 Encoder 상태 $h_i$의 연관성을 평가한다.
 
 $$
 e_{t,i} = f_{\mathrm{att}}(s_{t-1},h_i)
 $$
 
-- $e_{t,i}$$: 디코더 시점 $t$$에서 입력 위치 $i$$에 대한 **정렬 점수(alignment score)**
-- $f_{\mathrm{att}}$$: 학습 가능한 점수 함수
+- $e_{t,i}$: 디코더 시점 $t$에서 입력 위치 $i$에 대한 **정렬 점수(alignment score)**
+- $f_{\mathrm{att}}$: 학습 가능한 점수 함수
 - 점수가 클수록 해당 입력 위치가 현재 출력에 중요하다고 판단한다.
 
 > 이 강의에서는 직관적으로 점수 함수를 학습 가능한 선형 계층으로 설명한다. 실제 Bahdanau 논문의 *additive attention*은 일반적으로 $$v^\top\tanh(W_s s_{t-1}+W_hh_i)$$와 같은 형태로 구현한다. 따라서 **점수 함수의 구체적인 형태**와 **Attention의 전체 원리**는 구분해야 한다.
@@ -117,7 +117,7 @@ $$
 
 ### 2.2 점수를 확률적 가중치로 바꾸기: Softmax
 
-원시 점수 $$e_{t,i}$$는 제한 없는 실수다. 이를 Softmax로 정규화한다.
+원시 점수 $e_{t,i}$는 제한 없는 실수다. 이를 Softmax로 정규화한다.
 
 $$
 a_{t,i}
@@ -130,7 +130,7 @@ $$
 0 < a_{t,i} < 1,\qquad \sum_{i=1}^{T}a_{t,i}=1
 $$
 
-각 $$a_{t,i}$$가 *attention weight*다. 즉, Decoder가 현재 어느 입력 위치를 얼마나 참고할지 나타내는 가중치다.
+각 $a_{t,i}$가 *attention weight*다. 즉, Decoder가 현재 어느 입력 위치를 얼마나 참고할지 나타내는 가중치다.
 
 ### 2.3 Context vector는 가중합(Weighted Sum)
 
@@ -140,7 +140,7 @@ $$
 c_t = \sum_{i=1}^{T}a_{t,i}h_i
 $$
 
-이제 Decoder 상태 갱신에 단일한 $$c$$가 아닌 **시점별 context vector $$c_t$$**를 사용한다.
+이제 Decoder 상태 갱신에 단일한 $c$가 아닌 **시점별 context vector $c_t$** 를 사용한다.
 
 $$
 s_t = g_U(y_{t-1},s_{t-1},c_t)
@@ -162,7 +162,7 @@ $$
 |---|---:|---:|---:|---:|
 | Attention weight | 0.05 | 0.05 | 0.80 | 0.10 |
 
-이렇게 모델이 번역 과정에서 **입력–출력 간 정렬(alignment)**을 학습한다. Attention weight를 행렬로 시각화하면 어떤 출력 단어가 어떤 입력 단어를 주로 참조하는지 대략적으로 살펴볼 수 있다.
+이렇게 모델이 번역 과정에서 **입력–출력 간 정렬(alignment)** 을 학습한다. Attention weight를 행렬로 시각화하면 어떤 출력 단어가 어떤 입력 단어를 주로 참조하는지 대략적으로 살펴볼 수 있다.
 
 다만 **Attention weight가 반드시 원인적 설명이나 완전한 해석 가능성을 제공하는 것은 아니다.** Attention heatmap은 참조 패턴을 관찰하기 위한 도구로 이해하는 편이 정확하다.
 
@@ -179,11 +179,11 @@ $$
 
 원래 Attention은 Encoder–Decoder 안에 들어 있는 보조 장치였다. 그러나 핵심 연산만 분리하면 더 범용적인 형태를 얻을 수 있다.
 
-**'어떤 Query가 주어졌을 때, 데이터 집합에서 관련 있는 정보를 선택해 요약한다'**는 관점이다.
+**'어떤 Query가 주어졌을 때, 데이터 집합에서 관련 있는 정보를 선택해 요약한다'** 는 관점이다.
 
 ### 3.1 Query 하나와 데이터 벡터 여러 개
 
-Query 벡터 $$q$$와 데이터 벡터 $$X_1,\ldots,X_M$$이 있다고 하자.
+Query 벡터 $q$와 데이터 벡터 $X_1,\ldots,X_M$이 있다고 하자.
 
 1. Query와 각 데이터 사이의 유사도 계산
 2. 유사도를 Softmax로 정규화
@@ -209,11 +209,11 @@ $$
 
 내적이 클수록(벡터의 크기 영향을 포함하여) 두 표현이 강하게 정렬되었다고 해석할 수 있다. 행렬 곱으로 계산하기 쉬워 GPU 병렬화에도 유리하다.
 
-### 3.3 왜 $$\sqrt{d_k}$$로 나눌까? — Scaled Dot-Product
+### 3.3 왜 $\sqrt{d_k}$로 나눌까? — Scaled Dot-Product
 
 차원이 큰 벡터끼리 내적하면 점수의 크기가 커지는 경향이 있다. 큰 점수가 Softmax에 들어가면 분포가 과도하게 뾰족해지고, 특정 영역에서 기울기가 작아져 학습이 어려워질 수 있다.
 
-그래서 Query, Key의 차원을 $$d_k$$라고 할 때 다음과 같이 스케일링한다.
+그래서 Query, Key의 차원을 $d_k$라고 할 때 다음과 같이 스케일링한다.
 
 $$
 e_j = \frac{q^\top k_j}{\sqrt{d_k}}
@@ -240,13 +240,13 @@ $$
 
 ### 3.4 점수 → 확률 → 출력의 수치 예시
 
-어떤 Query가 데이터 3개에 대해 점수 $$[2,1,0]$$을 얻었다고 하자.
+어떤 Query가 데이터 3개에 대해 점수 $[2,1,0]$을 얻었다고 하자.
 
 $$
 \operatorname{softmax}([2,1,0])\approx[0.665,0.245,0.090]
 $$
 
-Values가 각각 $$v_1=[1,0]$$, $$v_2=[0,1]$$, $$v_3=[1,1]$$이면,
+Values가 각각 $v_1=[1,0]$, $v_2=[0,1]$, $v_3=[1,1]$이면,
 
 $$
 \begin{aligned}
@@ -267,17 +267,17 @@ Attention을 더 유연하게 만들기 위해 **비교에 쓰는 표현**과 **
 
 | 구성 요소 | 직관적 역할 | 실제 계산에서 하는 일 |
 |---|---|---|
-| Query ($$Q$$) | 지금 무엇이 필요한가? | Key와 비교해 attention score를 만든다. |
-| Key ($$K$$) | 어떤 정보가 어디에 있는가? | Query와의 유사도 계산에 사용된다. |
-| Value ($$V$$) | 실제 전달할 정보는 무엇인가? | Attention weight에 따라 가중합된다. |
+| Query ($Q$) | 지금 무엇이 필요한가? | Key와 비교해 attention score를 만든다. |
+| Key ($K$) | 어떤 정보가 어디에 있는가? | Query와의 유사도 계산에 사용된다. |
+| Value ($V$) | 실제 전달할 정보는 무엇인가? | Attention weight에 따라 가중합된다. |
 
 도서관에 비유하면 Query는 검색어, Key는 색인, Value는 실제로 가져올 정보다. 중요한 점은 이 세 가지가 **학습 가능한 선형 변환을 통해 형성된 벡터**라는 사실이다.
 
 ### 4.2 Cross-Attention의 행렬 연산
 
-Query 집합이 $$Q\in\mathbb{R}^{N_q\times d_k}$$이고, 참조할 데이터가 $$X\in\mathbb{R}^{N_k\times d_{\mathrm{in}}}$$라고 하자.
+Query 집합이 $Q\in\mathbb{R}^{N_q\times d_k}$이고, 참조할 데이터가 $X\in\mathbb{R}^{N_k\times d_{\mathrm{in}}}$라고 하자.
 
-Key와 Value는 데이터 $$X$$로부터 만든다.
+Key와 Value는 데이터 $X$로부터 만든다.
 
 $$
 K = XW_K,\qquad V=XW_V
@@ -320,11 +320,11 @@ $$
 세 식을 합치면 가장 중요한 공식이 된다.
 
 $$
-\boxed{\operatorname{Attention}(Q,K,V)
-=\operatorname{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}\right)V}
+\operatorname{Attention}(Q,K,V)
+=\operatorname{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}\right)V
 $$
 
-> **축에 주의:** 여기서는 Query가 **행(row)**, Key가 **열(column)**이다. 따라서 `softmax(dim=-1)`을 사용하면 각 Query의 가중치 합이 1이 된다. 슬라이드의 일부 도식은 행과 열의 시각적 배치를 반대로 그렸지만, 구현에서는 **텐서 차원과 정규화 축**을 기준으로 확인해야 한다.
+> **축에 주의:** 여기서는 Query가 **행(row)**, Key가 **열(column)** 이다. 따라서 `softmax(dim=-1)`을 사용하면 각 Query의 가중치 합이 1이 된다. 슬라이드의 일부 도식은 행과 열의 시각적 배치를 반대로 그렸지만, 구현에서는 **텐서 차원과 정규화 축**을 기준으로 확인해야 한다.
 {: .prompt-warning }
 
 ### 4.3 Cross-Attention이라는 이름의 의미
@@ -351,9 +351,9 @@ flowchart LR
 
 | 구분 | Self-Attention | Cross-Attention |
 |---|---|---|
-| Query의 출처 | 입력 $$X$$ | Query 입력 $$X_q$$ |
-| Key/Value의 출처 | 같은 입력 $$X$$ | 별도의 참조 입력 $$X_{kv}$$ |
-| Attention score 크기 | $$N\times N$$ | $$N_q\times N_k$$ |
+| Query의 출처 | 입력 $X$ | Query 입력 $X_q$ |
+| Key/Value의 출처 | 같은 입력 $X$ | 별도의 참조 입력 $X_{kv}$ |
+| Attention score 크기 | $N\times N$ | $N_q\times N_k$ |
 | 대표적인 용도 | 문장, 이미지 내부 관계 | 번역, 이미지–텍스트 상호 참조 |
 
 ---
@@ -362,7 +362,7 @@ flowchart LR
 
 ### 5.1 정의
 
-Self-Attention에서는 입력 $$X$$가 스스로 Query, Key, Value를 만들어 다른 입력 위치들과 상호작용한다.
+Self-Attention에서는 입력 $X$가 스스로 Query, Key, Value를 만들어 다른 입력 위치들과 상호작용한다.
 
 $$
 \begin{aligned}
@@ -376,7 +376,7 @@ $$
 \boxed{Y=\operatorname{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}\right)V}
 $$
 
-입력과 출력의 토큰 개수는 모두 $$N$$개다. 하지만 각 출력 벡터는 **자기 자신뿐 아니라 모든 입력의 Value를 참고한 조합**이 된다.
+입력과 출력의 토큰 개수는 모두 $N$개다. 하지만 각 출력 벡터는 **자기 자신뿐 아니라 모든 입력의 Value를 참고한 조합**이 된다.
 
 $$
 y_i=\sum_{j=1}^{N}A_{ij}v_j
@@ -416,7 +416,7 @@ $$
 F(PX)=PF(X)
 $$
 
-여기서 $$P$$는 순열 행렬이다. 실제로
+여기서 $P$는 순열 행렬이다. 실제로
 
 $$
 Q'=PQ,\quad K'=PK,\quad V'=PV
@@ -431,7 +431,7 @@ E' &= \frac{Q'(K')^\top}{\sqrt{d_k}}\\
 \end{aligned}
 $$
 
-Softmax 역시 행과 열이 함께 순열되어 $$A'=PAP^\top$$이 되므로,
+Softmax 역시 행과 열이 함께 순열되어 $A'=PAP^\top$이 되므로,
 
 $$
 Y'=A'V'=PAP^\top PV=PAY=PY
@@ -443,13 +443,13 @@ $$
 
 자연어는 `dog bites man`과 `man bites dog`의 순서가 중요하다. 이미지는 위치가 다른 두 patch가 동일한 의미를 갖지 않을 수 있다.
 
-따라서 위치 정보 $$P$$를 입력에 합쳐준다.
+따라서 위치 정보 $P$를 입력에 합쳐준다.
 
 $$
 Z=X+P
 $$
 
-그 후 $$Z$$로부터 QKV를 계산하면 Attention이 내용뿐 아니라 위치를 반영할 수 있다.
+그 후 $Z$로부터 QKV를 계산하면 Attention이 내용뿐 아니라 위치를 반영할 수 있다.
 
 대표적인 방법으로는 다음이 있다.
 
@@ -474,7 +474,7 @@ Self-Attention은 기본적으로 모든 토큰을 볼 수 있으므로, **특�
 
 ### 6.2 Causal Mask의 수식
 
-Query 인덱스 $$i$$, Key 인덱스 $$j$$라고 하자. 미래인 $$j>i$$를 가리고 싶다면,
+Query 인덱스 $i$, Key 인덱스 $j$라고 하자. 미래인 $j>i$를 가리고 싶다면,
 
 $$
 M_{ij}=\begin{cases}
@@ -489,7 +489,7 @@ $$
 A=\operatorname{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}+M\right)
 $$
 
-$$\exp(-\infty)=0$$이므로 가려진 위치의 가중치는 0이 된다. 세 토큰일 때 Attention weight의 형태는 대략 다음과 같다.
+$\exp(-\infty)=0$이므로 가려진 위치의 가중치는 0이 된다. 세 토큰일 때 Attention weight의 형태는 대략 다음과 같다.
 
 $$
 A=\begin{bmatrix}
@@ -524,7 +524,7 @@ Mask는 별개의 Attention 연산이 아니라 **허용되는 Query–Key 연�
 
 ### 7.2 Head별 계산
 
-Head 수를 $$H$$, 입력 임베딩 차원을 $$D$$, head 차원을 $$d_h$$라고 하자. 흔히
+Head 수를 $H$, 입력 임베딩 차원을 $D$, head 차원을 $d_h$라고 하자. 흔히
 
 $$
 d_h=\frac{D}{H}
@@ -548,26 +548,26 @@ $$
 각 head의 결과를 이어 붙인 뒤 출력 projection을 적용한다.
 
 $$
-\boxed{\operatorname{MHA}(X)=
-\operatorname{Concat}(\operatorname{head}_1,\ldots,\operatorname{head}_H)W_O}
+\operatorname{MHA}(X)=
+\operatorname{Concat}(\operatorname{head}_1,\ldots,\operatorname{head}_H)W_O
 $$
 
 ### 7.3 Shape를 추적하면 구조가 보인다
 
-배치 차원 $$B$$까지 포함하면 다음과 같다.
+배치 차원 $B$까지 포함하면 다음과 같다.
 
 | 단계 | 텐서 Shape |
 |---|---|
-| 입력 $$X$$ | `[B, N, D]` |
+| 입력 $X$ | `[B, N, D]` |
 | 합쳐진 QKV projection | `[B, N, 3D]` |
 | 각 Q/K/V의 head 분리 | `[B, H, N, d_h]` |
-| $$QK^\top$$ 유사도 | `[B, H, N, N]` |
+| $QK^\top$ 유사도 | `[B, H, N, N]` |
 | Softmax 결과 | `[B, H, N, N]` |
 | Attention output (head별) | `[B, H, N, d_h]` |
 | Head 결합 | `[B, N, D]` |
 | 출력 projection | `[B, N, D]` |
 
-예를 들어 $$D=768$$, $$H=12$$라면 각 head의 차원은 $$d_h=64$$이다.
+예를 들어 $D=768$, $H=12$라면 각 head의 차원은 $d_h=64$이다.
 
 > **Self-Attention의 중요한 실전 체크 포인트:** `softmax`는 `[B, H, N, N]`에서 맨 마지막 차원인 **Key 위치**를 따라 계산해야 한다. 각 Query가 Key들에 대한 가중치 분포를 갖도록 하는 것이다.
 {: .prompt-warning }
@@ -580,16 +580,16 @@ $$
 
 강의는 Multi-Head Self-Attention을 큰 흐름에서 네 번의 행렬 곱으로 설명한다.
 
-1. **QKV Projection:** $XW_{QKV}$$
-2. **Query–Key Similarity:** $QK^\top$$
-3. **Value Weighting:** $AV$$
-4. **Output Projection:** $YW_O$$
+1. **QKV Projection:** $XW_{QKV}$
+2. **Query–Key Similarity:** $QK^\top$
+3. **Value Weighting:** $AV$
+4. **Output Projection:** $YW_O$
 
 물론 Softmax, reshape, transpose, masking 같은 연산도 필요하므로 **전체 계산이 문자 그대로 행렬 곱 네 번뿐이라는 뜻은 아니다**. 핵심은 주된 연산들이 대형 행렬 연산으로 구성되어 GPU/TPU에서 병렬 실행하기 좋다는 점이다.
 
-### 8.2 시간 복잡도: 왜 $$O(N^2)$$인가?
+### 8.2 시간 복잡도: 왜 $O(N^2)$인가?
 
-Self-Attention에서는 $$N$$개 Query가 $$N$$개 Key와 비교된다. 따라서 유사도 행렬에 총 $$N^2$$개의 원소가 생긴다.
+Self-Attention에서는 $N$개 Query가 $N$개 Key와 비교된다. 따라서 유사도 행렬에 총 $N^2$개의 원소가 생긴다.
 
 $$
 QK^\top: [N,d_h]\times[d_h,N]\rightarrow[N,N]
@@ -607,11 +607,11 @@ $$
 \boxed{O(ND^2+N^2D)}
 $$
 
-와 같이 표현할 수 있다. **$$D$$를 고정하고 입력 길이 $$N$$만 늘리는 비교**에서 Attention 부분의 시간 복잡도가 $$O(N^2)$$가 된다.
+와 같이 표현할 수 있다. **$D$를 고정하고 입력 길이 $N$만 늘리는 비교**에서 Attention 부분의 시간 복잡도가 $O(N^2)$가 된다.
 
 ### 8.3 메모리 복잡도: Attention matrix가 커진다
 
-Naive Attention 구현에서는 각 head마다 $$N\times N$$의 Attention 행렬을 저장한다. 배치 크기를 $$B$$, head 수를 $$H$$라 하면 원소 개수는
+Naive Attention 구현에서는 각 head마다 $N\times N$의 Attention 행렬을 저장한다. 배치 크기를 $B$, head 수를 $H$라 하면 원소 개수는
 
 $$
 BHN^2
@@ -619,27 +619,27 @@ $$
 
 이다.
 
-예를 들어 배치 크기 1, $$N=100,000$$, $$H=64$$, 원소당 2바이트(fp16/bf16 저장)를 가정하면,
+예를 들어 배치 크기 1, $N=100,000$, $H=64$, 원소당 2바이트(fp16/bf16 저장)를 가정하면,
 
 $$
 1\times64\times(100,000)^2\times2
 =1.28\times10^{12}\;\text{bytes}
 $$
 
-즉 Attention weight **하나의 텐서만 약 1.28 TB(10진 단위)**가 필요할 수 있다. 이를 통째로 저장하는 것은 일반적인 GPU 한 대에서 불가능하다.
+즉 Attention weight **하나의 텐서만 약 1.28 TB(10진 단위)** 가 필요할 수 있다. 이를 통째로 저장하는 것은 일반적인 GPU 한 대에서 불가능하다.
 
 ### 8.4 FlashAttention은 무엇을 바꾸는가?
 
-[FlashAttention](https://arxiv.org/abs/2205.14135)은 Attention을 타일 단위로 처리하고, 메모리 접근을 최적화하면서 **전체 $$N\times N$$ Attention 행렬을 GPU의 고대역폭 메모리에 물리적으로 모두 저장하지 않도록** 계산을 재구성한다.
+[FlashAttention](https://arxiv.org/abs/2205.14135)은 Attention을 타일 단위로 처리하고, 메모리 접근을 최적화하면서 **전체 $N\times N$ Attention 행렬을 GPU의 고대역폭 메모리에 물리적으로 모두 저장하지 않도록** 계산을 재구성한다.
 
 직관적으로는 다음과 같다.
 
 - 일반적인 방식: 큰 점수 행렬을 만들고 저장한 뒤 Softmax와 Value 곱을 수행
 - FlashAttention 방식: 블록 단위로 점수 계산, 정규화, 가중합을 진행하여 필요한 중간 상태만 유지
 
-입력 길이에 대한 메모리 사용을 크게 줄이면서도 수학적으로 **정확한 Attention(exact attention)**을 계산할 수 있다. 고정된 head 차원에서 Attention 중간행렬을 저장하는 비용은 선형 규모 수준으로 줄일 수 있다.
+입력 길이에 대한 메모리 사용을 크게 줄이면서도 수학적으로 **정확한 Attention(exact attention)** 을 계산할 수 있다. 고정된 head 차원에서 Attention 중간행렬을 저장하는 비용은 선형 규모 수준으로 줄일 수 있다.
 
-> **자주 하는 오해:** FlashAttention이 표준 dense Self-Attention의 **$$O(N^2)$$ 연산량 자체를 일반적으로 $$O(N)$$으로 바꾸는 것은 아니다.** 핵심 이점은 **메모리 이동(I/O)과 중간행렬 저장 비용의 최적화**다. 강의에서 말하는 선형 메모리와 이차 시간 복잡도를 구분해야 한다.
+> **자주 하는 오해:** FlashAttention이 표준 dense Self-Attention의 **$O(N^2)$ 연산량 자체를 일반적으로 $O(N)$으로 바꾸는 것은 아니다.** 핵심 이점은 **메모리 이동(I/O)과 중간행렬 저장 비용의 최적화**다. 강의에서 말하는 선형 메모리와 이차 시간 복잡도를 구분해야 한다.
 {: .prompt-warning }
 
 ---
@@ -682,7 +682,7 @@ Transformer Block은 크게 다음 요소를 결합한다.
 
 ### 10.2 Residual Connection
 
-Residual Connection은 함수 $$F$$를 통과한 결과에 원래 입력을 더한다.
+Residual Connection은 함수 $F$를 통과한 결과에 원래 입력을 더한다.
 
 $$
 y=x+F(x)
@@ -694,7 +694,7 @@ $$
 
 LayerNorm은 배치 전체가 아니라 **각 토큰 벡터의 feature 차원**을 기준으로 평균과 분산을 계산한다.
 
-입력 $$x\in\mathbb{R}^D$$에 대하여,
+입력 $x\in\mathbb{R}^D$에 대하여,
 
 $$
 \mu=\frac1D\sum_{i=1}^{D}x_i
@@ -709,9 +709,9 @@ $$
 =\gamma_i\frac{x_i-\mu}{\sqrt{\sigma^2+\epsilon}}+\beta_i
 $$
 
-- $\gamma$$: 학습 가능한 scale 파라미터
-- $\beta$$: 학습 가능한 shift 파라미터
-- $\epsilon$$: 수치적 안정성 확보를 위한 작은 상수
+- $\gamma$: 학습 가능한 scale 파라미터
+- $\beta$: 학습 가능한 shift 파라미터
+- $\epsilon$: 수치적 안정성 확보를 위한 작은 상수
 
 Attention은 토큰 간 정보를 섞지만, **LayerNorm은 각 토큰의 feature 차원을 독립적으로 정규화**한다.
 
@@ -729,7 +729,7 @@ $$
 D\rightarrow4D\rightarrow D
 $$
 
-예를 들어 모델 차원이 $$D=768$$이면 hidden dimension을 $$3072$$로 확장했다가 다시 $$768$$로 줄일 수 있다.
+예를 들어 모델 차원이 $D=768$이면 hidden dimension을 $3072$로 확장했다가 다시 $768$로 줄일 수 있다.
 
 **Attention과 MLP의 역할을 구분하자.**
 
@@ -769,21 +769,21 @@ $$
 
 ### 11.1 토큰을 벡터로 바꾸기
 
-Vocabulary 크기를 $$V$$, 모델 차원을 $$D$$라고 하면 임베딩 행렬은
+Vocabulary 크기를 $V$, 모델 차원을 $D$라고 하면 임베딩 행렬은
 
 $$
 W_E\in\mathbb{R}^{V\times D}
 $$
 
-이다. 토큰 ID를 통해 해당 행을 조회해 $$D$$차원 벡터로 만든다.
+이다. 토큰 ID를 통해 해당 행을 조회해 $D$차원 벡터로 만든다.
 
 ### 11.2 Masked Transformer Block 통과
 
-입력 토큰들이 여러 개의 Transformer Block을 지나면서 문맥적 표현을 얻는다. **Causal Mask**를 사용하여 위치 $$t$$가 이후 위치의 실제 토큰을 보지 못하게 한다.
+입력 토큰들이 여러 개의 Transformer Block을 지나면서 문맥적 표현을 얻는다. **Causal Mask**를 사용하여 위치 $t$가 이후 위치의 실제 토큰을 보지 못하게 한다.
 
 ### 11.3 다음 토큰을 예측하기 위한 Vocabulary Projection
 
-각 위치의 최종 hidden vector는 $$D$$차원이고, vocabulary 각 항목의 점수를 예측하려면 $$V$$차원의 출력이 필요하다.
+각 위치의 최종 hidden vector는 $D$차원이고, vocabulary 각 항목의 점수를 예측하려면 $V$차원의 출력이 필요하다.
 
 $$
 W_{\mathrm{vocab}}\in\mathbb{R}^{D\times V}
@@ -835,7 +835,7 @@ $$
 
 ### 12.2 Patch Embedding
 
-각 Patch를 $$D$$차원으로 선형 투영하면,
+각 Patch를 $D$차원으로 선형 투영하면,
 
 $$
 \mathbb{R}^{768}\rightarrow\mathbb{R}^{D}
@@ -849,7 +849,7 @@ $$
 
 이 된다.
 
-흥미롭게도 **Patch 추출 + 선형 투영은 특정 Convolution과 수학적으로 동등하게 구현할 수 있다.** Kernel size 16, stride 16, 입력 채널 3, 출력 채널 $$D$$인 Conv2d를 사용하면 된다.
+흥미롭게도 **Patch 추출 + 선형 투영은 특정 Convolution과 수학적으로 동등하게 구현할 수 있다.** Kernel size 16, stride 16, 입력 채널 3, 출력 채널 $D$인 Conv2d를 사용하면 된다.
 
 ### 12.3 위치 정보가 필요하다
 
@@ -885,13 +885,13 @@ $$
 
 ### 12.6 Patch 크기와 계산 비용의 Trade-off
 
-이미지의 높이, 너비가 $$H_{\mathrm{img}},W_{\mathrm{img}}$$, Patch 크기가 $$P$$라면 Patch 수는
+이미지의 높이, 너비가 $H_{\mathrm{img}},W_{\mathrm{img}}$, Patch 크기가 $P$라면 Patch 수는
 
 $$
 N=\frac{H_{\mathrm{img}}W_{\mathrm{img}}}{P^2}
 $$
 
-이다. 같은 이미지에서 Patch 크기를 절반으로 줄이면 토큰 수가 약 4배가 되고, **dense Attention의 $$N^2$$ 관련 비용은 약 16배**로 증가할 수 있다.
+이다. 같은 이미지에서 Patch 크기를 절반으로 줄이면 토큰 수가 약 4배가 되고, **dense Attention의 $N^2$ 관련 비용은 약 16배**로 증가할 수 있다.
 
 | Patch 크기 | 224×224 이미지의 토큰 수 | Attention score 행렬 크기(한 head) |
 |---|---:|---:|
@@ -963,19 +963,19 @@ $$
 \left[\operatorname{SiLU}(XW_1)\odot(XW_2)\right]W_3}
 $$
 
-- $\odot$$: 원소별 곱(Hadamard product)
-- $\operatorname{SiLU}(x)=x\,\operatorname{sigmoid}(x)$$: Swish 계열 활성화 함수
-- $W_1,W_2$$: 서로 다른 입력 projection
-- $W_3$$: 출력 차원으로 되돌리는 projection
+- $\odot$: 원소별 곱(Hadamard product)
+- $\operatorname{SiLU}(x)=x\,\operatorname{sigmoid}(x)$: Swish 계열 활성화 함수
+- $W_1,W_2$: 서로 다른 입력 projection
+- $W_3$: 출력 차원으로 되돌리는 projection
 
-고전적 FFN의 hidden dimension을 $$4D$$로 설정할 경우, SwiGLU에서 중간 차원을 **대략 $$8D/3$$**으로 두면 전체 weight parameter 수가 비슷해진다(편향 등은 제외한 비교).
+고전적 FFN의 hidden dimension을 $4D$로 설정할 경우, SwiGLU에서 중간 차원을 **대략 $8D/3$** 으로 두면 전체 weight parameter 수가 비슷해진다(편향 등은 제외한 비교).
 
 ### 13.4 Mixture of Experts(MoE): 토큰별로 일부 MLP만 활성화
 
-MoE는 하나의 FFN 대신 여러 개의 **Expert(보통 서로 다른 MLP)**를 준비한다.
+MoE는 하나의 FFN 대신 여러 개의 **Expert(보통 서로 다른 MLP)** 를 준비한다.
 
-- 전체 Expert 수: $E$$
-- 토큰마다 선택되는 Active Expert 수: $k$$ (강의에서는 $A$$로 표기)
+- 전체 Expert 수: $E$
+- 토큰마다 선택되는 Active Expert 수: $k$ (강의에서는 $A$로 표기)
 - Router가 토큰별로 사용 가능한 Expert 중 일부를 선택한다.
 
 단순화한 출력 형태는 다음과 같다.
@@ -987,7 +987,7 @@ $$
 
 전체 파라미터를 늘리면서도 각 토큰 계산에는 일부 Expert만 참여하기 때문에, **Dense FFN 대비 파라미터 규모와 실제 활성 연산량을 부분적으로 분리**할 수 있다.
 
-다만 정확한 비용은 Routing, Expert 간 통신, Load Balancing, Expert 크기 등의 영향을 받는다. Expert 수가 $$E$$배가 되었다고 실제 전체 모델 파라미터가 정확히 $$E$$배가 되는 것도 아니다.
+다만 정확한 비용은 Routing, Expert 간 통신, Load Balancing, Expert 크기 등의 영향을 받는다. Expert 수가 $E$배가 되었다고 실제 전체 모델 파라미터가 정확히 $E$배가 되는 것도 아니다.
 
 > **자료 해석 주의:** 강의 슬라이드에 등장하는 특정 상용 대형 모델들의 내부 MoE 채택 여부와 파라미터 수 추정은 강의 시점의 **추측 또는 비공개 정보에 대한 추정**이다. 공식적으로 공개된 아키텍처 사실과 혼동하지 않아야 한다.
 {: .prompt-warning }
@@ -1198,7 +1198,7 @@ Self-Attention은 Attention의 특별한 경우다. 일반적인 Attention은 Qu
 
 ### Q5. Masked Attention에서 Softmax를 한 뒤에 0으로 만들면 되나?
 
-단순히 결과를 0으로 만드는 것만으로는 남은 확률의 합이 1이 아닐 수 있다. 일반적으로 **Softmax 전에** 가려진 score를 $$-\infty$$로 설정해 허용된 위치들만 정규화한다.
+단순히 결과를 0으로 만드는 것만으로는 남은 확률의 합이 1이 아닐 수 있다. 일반적으로 **Softmax 전에** 가려진 score를 $-\infty$로 설정해 허용된 위치들만 정규화한다.
 
 ### Q6. Head 수가 많을수록 무조건 좋은가?
 
@@ -1222,7 +1222,7 @@ Self-Attention은 Attention의 특별한 경우다. 일반적인 Attention은 Qu
 
 ### 16.1 Image, Video, Language를 하나의 관점으로 볼 수 있다
 
-Transformer의 입력은 기본적으로 $$N$$개의 $$D$$차원 토큰 벡터다.
+Transformer의 입력은 기본적으로 $N$개의 $D$차원 토큰 벡터다.
 
 - **Language:** 서브워드 등 토크나이저가 만든 토큰
 - **Image:** 공간적으로 나눈 image patch
@@ -1271,7 +1271,7 @@ $$
 | RNN Seq2Seq의 병목 | 긴 입력 전체를 하나의 고정 길이 context vector에 압축한다. |
 | Encoder–Decoder Attention | Decoder step마다 Encoder hidden state의 가중합을 다시 계산한다. |
 | Query / Key / Value | 필요한 정보의 조건, 비교용 표현, 실제로 읽어올 정보를 분리한다. |
-| Scaled Dot-Product | $$QK^\top$$을 $$\sqrt{d_k}$$로 나누어 Softmax 입력 스케일을 조정한다. |
+| Scaled Dot-Product | $QK^\top$을 $\sqrt{d_k}$로 나누어 Softmax 입력 스케일을 조정한다. |
 | Self-Attention | 같은 입력에서 Q/K/V를 만들어 토큰끼리 정보를 교환한다. |
 | Positional Encoding | 순서 자체를 모르는 Attention에 위치 정보를 제공한다. |
 | Causal Mask | 미래 토큰에 대한 Attention weight를 0으로 제한한다. |
